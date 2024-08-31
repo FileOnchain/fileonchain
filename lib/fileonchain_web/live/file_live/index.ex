@@ -43,7 +43,7 @@ defmodule FileonchainWeb.FileLive.Index do
   def render_file_preview(file) do
     case get_image_type(file.data) do
       {:ok, mime_type} ->
-        "<img src=\"data:#{mime_type};base64,#{file.data}\" alt=\"#{file.filename}\" style=\"max-width: 100px; max-height: 100px;\" />"
+        "<img src=\"data:#{mime_type};base64,#{file.data}\" alt=\"#{file.filename}\" style=\"max-width: 100px; max-height: 100px; object-fit: contain;\" />"
       :error ->
         "<span class=\"text-gray-500\">Preview not available</span>"
     end

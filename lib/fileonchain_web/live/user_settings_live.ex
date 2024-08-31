@@ -5,7 +5,7 @@ defmodule FileonchainWeb.UserSettingsLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-md p-12 bg-gray-900 text-white rounded-lg shadow-lg">
+    <div class="mx-auto max-w-2xl p-12 bg-gray-900 text-white rounded-lg shadow-lg">
       <.header class="text-center text-white text-2xl">
         Account Settings
         <:subtitle>Manage your account email address and password settings</:subtitle>

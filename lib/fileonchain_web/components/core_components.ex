@@ -60,7 +60,7 @@ defmodule FileonchainWeb.CoreComponents do
         tabindex="0"
       >
         <div class="flex min-h-full items-center justify-center">
-          <div class="w-full max-w-3xl p-4 sm:p-6 lg:py-8">
+          <div class="w-full max-w-4xl p-4 sm:p-6 lg:py-8">
             <.focus_wrap
               id={"#{@id}-container"}
               phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
@@ -486,27 +486,27 @@ defmodule FileonchainWeb.CoreComponents do
         <tbody
           id={@id}
           phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
-          class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-white"
+          class="relative divide-y divide-zinc-700 border-t border-zinc-700 text-sm leading-6 text-white"
         >
-          <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-zinc-50 hover:text-black">
+          <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-gray-700 transition-colors duration-200">
             <td
               :for={{col, i} <- Enum.with_index(@col)}
               phx-click={@row_click && @row_click.(row)}
-              class={["relative p-0 text-white", @row_click && "hover:cursor-pointer text-gray"]}
+              class={["relative p-0", @row_click && "hover:cursor-pointer"]}
             >
               <div class="block py-4 pr-6">
-                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-zinc-50 hover:text-black sm:rounded-l-xl" />
-                <span class={["relative", i == 0 && "font-semibold text-white"]}>
+                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-gray-700 sm:rounded-l-xl" />
+                <span class={["relative", i == 0 && "font-semibold"]}>
                   <%= render_slot(col, @row_item.(row)) %>
                 </span>
               </div>
             </td>
-            <td :if={@action != []} class="relative w-14 p-0 text-white">
+            <td :if={@action != []} class="relative w-14 p-0 pr-4">
               <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
-                <span class="absolute -inset-y-px -right-4 left-0 group-hover:bg-zinc-50 hover:text-black sm:rounded-r-xl" />
+                <span class="absolute -inset-y-px -right-4 left-0 group-hover:bg-gray-700 sm:rounded-r-xl" />
                 <span
                   :for={action <- @action}
-                  class="relative ml-4 font-semibold leading-6 text-white hover:text-black"
+                  class="relative ml-4 font-semibold leading-6 text-white hover:text-zinc-300"
                 >
                   <%= render_slot(action, @row_item.(row)) %>
                 </span>
