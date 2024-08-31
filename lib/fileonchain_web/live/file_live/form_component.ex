@@ -5,7 +5,11 @@ defmodule FileonchainWeb.FileLive.FormComponent do
 
   @impl true
   def mount(socket) do
-    {:ok, allow_upload(socket, :file, accept: :any, max_entries: 1)}
+    {:ok, allow_upload(socket, :file,
+      accept: :any,
+      max_entries: 1,
+      max_file_size: 100_000_000  # 100 MB
+    )}
   end
 
   @impl true
@@ -42,6 +46,10 @@ defmodule FileonchainWeb.FileLive.FormComponent do
             <% end %>
           </div>
         </div>
+
+        <%= for err <- upload_errors(@uploads.file) do %>
+          <div class="text-red-500 text-sm"><%= error_to_string(err) %></div>
+        <% end %>
 
         <:actions>
           <.button phx-disable-with="Saving..." class="w-full bg-blue-500 text-white p-4 rounded hover:bg-blue-600">
@@ -95,4 +103,8 @@ defmodule FileonchainWeb.FileLive.FormComponent do
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+  defp error_to_string(:too_large), do: "The file is too large"
+  defp error_to_string(:too_many_files), do: "You have selected too many files"
+  defp error_to_string(:not_accepted), do: "You have selected an unacceptable file type"
 end
