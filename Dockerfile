@@ -69,6 +69,12 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN node --version
 RUN npm --version
 
+# Install rustup and set the toolchain
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
+    source $HOME/.cargo/env && \
+    rustup install nightly-2022-07-24 && \
+    rustup default nightly-2022-07-24 && \
+    rustup target add wasm32-unknown-unknown
 
 # compile assets
 RUN mix assets.deploy

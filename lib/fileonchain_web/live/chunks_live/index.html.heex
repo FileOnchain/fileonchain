@@ -14,7 +14,12 @@
     row_click={fn {_id, chunk} -> JS.navigate(~p"/chunks/#{chunk}") end}
     class="w-full mt-6 bg-brand-800 rounded-lg"
   >
-    <:col :let={{_id, chunk}} label="Hash" class="p-4 border-b border-brand-700 text-white"><%= chunk.hash %></:col>
+    <:col :let={{_id, chunk}} label="Hash" class="p-4 border-b border-brand-700 text-white">
+      <%= FileonchainWeb.ChunkLive.Index.shorten_hash(chunk.hash) %>
+    </:col>
+    <:col :let={{_id, chunk}} label="CID" class="p-4 border-b border-brand-700 text-white">
+      <%= chunk.cid %>
+    </:col>
     <:col :let={{_id, chunk}} label="Data" class="p-4 border-b border-brand-700">
       <%= raw(FileonchainWeb.ChunkLive.Index.render_chunk_preview(chunk)) %>
     </:col>

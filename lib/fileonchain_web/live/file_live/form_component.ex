@@ -1,5 +1,6 @@
 defmodule FileonchainWeb.FileLive.FormComponent do
   use FileonchainWeb, :live_component
+  require Logger
 
   alias Fileonchain.Files
 
@@ -99,7 +100,8 @@ defmodule FileonchainWeb.FileLive.FormComponent do
 
         chunks_results =
           Enum.map(chunks, fn chunk ->
-            Fileonchain.Chunks.create_chunk(%{hash: "dummy_hash", cid: "dummy_cid", data: chunk})
+            hash = Blake3.hash(chunk) |> Base.encode16(case: :lower)
+            Fileonchain.Chunks.create_chunk(%{hash: hash, cid: "dummy_cid", data: chunk})
           end)
 
         if Enum.all?(chunks_results, fn {:ok, _} -> true; _ -> false end) do

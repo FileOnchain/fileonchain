@@ -77,4 +77,9 @@ defmodule FileonchainWeb.ChunkLive.Index do
       _ -> "N/A"
     end
   end
+
+  # Function to shorten hash
+  def shorten_hash(hash) do
+    String.slice(hash, 0, 6) <> "..." <> String.slice(hash, -6, 6)
+  end
 end

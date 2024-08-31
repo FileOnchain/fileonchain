@@ -53,6 +53,11 @@ config :tailwind,
     cd: Path.expand("../assets", __DIR__)
   ]
 
+# Configure blake3
+config :blake3,
+  simd_mode: :neon,
+  rayon: :true
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
