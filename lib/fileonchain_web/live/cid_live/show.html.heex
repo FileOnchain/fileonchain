@@ -1,0 +1,27 @@
+<.header>
+  Cid <%= @cid.id %>
+  <:subtitle>This is a cid record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/cids/#{@cid}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit cid</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Cid"><%= @cid.cid %></:item>
+  <:item title="Data"><%= @cid.data %></:item>
+</.list>
+
+<.back navigate={~p"/cids"}>Back to cids</.back>
+
+<.modal :if={@live_action == :edit} id="cid-modal" show on_cancel={JS.patch(~p"/cids/#{@cid}")}>
+  <.live_component
+    module={FileonchainWeb.CidLive.FormComponent}
+    id={@cid.id}
+    title={@page_title}
+    action={@live_action}
+    cid={@cid}
+    patch={~p"/cids/#{@cid}"}
+  />
+</.modal>
