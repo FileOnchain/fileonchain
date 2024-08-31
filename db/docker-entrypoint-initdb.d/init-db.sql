@@ -1,5 +1,1 @@
-CREATE DATABASE accounts;
-CREATE DATABASE consensus;
-CREATE DATABASE leaderboard;
-CREATE DATABASE staking;
-CREATE DATABASE testnet_rewards;
+CREATE DATABASE fileonchain;
