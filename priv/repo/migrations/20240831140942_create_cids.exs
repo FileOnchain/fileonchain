@@ -10,7 +10,6 @@ defmodule Fileonchain.Repo.Migrations.CreateCids do
       add :tx_block, :integer
       add :tx_timestamp, :integer
       add :tx_from, :text
-      add :created_by, references(:users, on_delete: :nothing), null: false
       add :created_at, :utc_datetime
       add :deleted_at, :utc_datetime
 
