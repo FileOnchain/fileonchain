@@ -18,6 +18,7 @@
     <:col :let={{_id, file}} label="Preview" class="p-4 border-b border-gray-700">
       <%= raw(render_file_preview(file)) %>
     </:col>
+    <:col :let={{_id, file}} label="Size" class="p-4 border-b border-gray-700"><%= format_file_size(file.data) %></:col>
     <:action :let={{_id, file}}>
       <div class="sr-only">
         <.link navigate={~p"/files/#{file}"} class="text-blue-400 hover:underline">Show</.link>

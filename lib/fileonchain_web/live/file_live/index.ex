@@ -62,4 +62,19 @@ defmodule FileonchainWeb.FileLive.Index do
       _ -> :error
     end
   end
+
+  # New function to format file size
+  def format_file_size(data) do
+    case Base.decode64(data) do
+      {:ok, decoded} ->
+        byte_size = byte_size(decoded)
+        cond do
+          byte_size < 1024 -> "#{byte_size} B"
+          byte_size < 1024 * 1024 -> "#{Float.round(byte_size / 1024, 2)} KB"
+          byte_size < 1024 * 1024 * 1024 -> "#{Float.round(byte_size / (1024 * 1024), 2)} MB"
+          true -> "#{Float.round(byte_size / (1024 * 1024 * 1024), 2)} GB"
+        end
+      _ -> "N/A"
+    end
+  end
 end
