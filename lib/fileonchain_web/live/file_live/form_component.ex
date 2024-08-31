@@ -93,16 +93,47 @@ defmodule FileonchainWeb.FileLive.FormComponent do
   defp save_file(socket, :new, file_params) do
     case Files.create_file(file_params) do
       {:ok, file} ->
-        notify_parent({:saved, file})
+        file_data = file_params["data"]
+        chunk_size = 256 * 1024  # 256 KB
+        chunks = chunk_binary(file_data, chunk_size)
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "File created successfully")
-         |> push_patch(to: socket.assigns.patch)}
+        cids_results =
+          Enum.map(chunks, fn _chunk ->
+            Fileonchain.Cids.create_cid(%{cid: "dummy_cid", data: "dummy_data"})
+          end)
+
+        if Enum.all?(cids_results, fn {:ok, _} -> true; _ -> false end) do
+          notify_parent({:saved, file})
+
+          {:noreply,
+           socket
+           |> put_flash(:info, "File and mock CIDs created successfully")
+           |> push_patch(to: socket.assigns.patch)}
+        else
+          {:noreply,
+           socket
+           |> put_flash(:error, "File created but failed to create some mock CIDs")
+           |> push_patch(to: socket.assigns.patch)}
+        end
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}
     end
+  end
+
+  defp chunk_binary(binary, chunk_size) do
+    chunk_binary(binary, chunk_size, [])
+  end
+
+  defp chunk_binary(<<>>, _chunk_size, acc), do: Enum.reverse(acc)
+  defp chunk_binary(binary, chunk_size, acc) when byte_size(binary) < chunk_size do
+    Enum.reverse([binary | acc])
+  end
+  defp chunk_binary(binary, chunk_size, acc) do
+    <<chunk::binary-size(chunk_size), rest::binary>> = binary
+    chunk_binary(rest, chunk_size, [chunk | acc])
+  rescue
+    MatchError -> Enum.reverse([binary | acc])
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
