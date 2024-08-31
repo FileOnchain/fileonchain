@@ -42,6 +42,7 @@ defmodule FileonchainWeb.FileLive.FormComponent do
                 <div class="mt-2">
                   <progress value={entry.progress} max="100" class="w-full"><%= entry.progress %>%</progress>
                 </div>
+                <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref} class="mt-2 text-red-500">&times; Cancel</button>
               <% end %>
             <% end %>
           </div>
@@ -72,9 +73,12 @@ defmodule FileonchainWeb.FileLive.FormComponent do
   end
 
   @impl true
-  def handle_event("validate", params, socket) do
-    changeset = Files.change_file(socket.assigns.file, params["file"] || %{})
-    {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
+  def handle_event("validate", _params, socket) do
+    {:noreply, socket}
+  end
+
+  def handle_event("cancel-upload", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :file, ref)}
   end
 
   def handle_event("save", %{"file" => file_params}, socket) do
