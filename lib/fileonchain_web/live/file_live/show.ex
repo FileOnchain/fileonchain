@@ -17,4 +17,7 @@ defmodule FileonchainWeb.FileLive.Show do
   end
 
   defp page_title(:show), do: "Show File"
+
+  # Import render_file_preview and format_file_size functions from Index
+  import FileonchainWeb.FileLive.Index, only: [render_file_preview: 2, format_file_size: 1]
 end

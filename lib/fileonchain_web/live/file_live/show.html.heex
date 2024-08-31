@@ -5,7 +5,13 @@
 
 <.list>
   <:item title="Filename"><%= @file.filename %></:item>
-  <:item title="Data"><%= @file.data %></:item>
+  <:item title="Preview">
+    <%= raw(render_file_preview(@file, "max-width: 300px; max-height: 300px; object-fit: contain;")) %>
+  </:item>
+  <:item title="Size"><%= format_file_size(@file.data) %></:item>
+  <:item title="Data">
+    <.textarea value={@file.data} readonly />
+  </:item>
 </.list>
 
 <.back navigate={~p"/files"}>Back to files</.back>

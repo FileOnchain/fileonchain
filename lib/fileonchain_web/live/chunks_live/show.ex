@@ -1,7 +1,7 @@
-defmodule FileonchainWeb.CidLive.Show do
+defmodule FileonchainWeb.ChunkLive.Show do
   use FileonchainWeb, :live_view
 
-  alias Fileonchain.Cids
+  alias Fileonchain.Chunks
 
   @impl true
   def mount(_params, _session, socket) do
@@ -13,8 +13,8 @@ defmodule FileonchainWeb.CidLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:cid, Cids.get_cid!(id))}
+     |> assign(:chunk, Chunks.get_chunk!(id))}
   end
 
-  defp page_title(:show), do: "Show Cid"
+  defp page_title(:show), do: "Show Chunk"
 end

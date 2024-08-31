@@ -71,10 +71,10 @@ defmodule FileonchainWeb.Router do
 
       live "/files/:id", FileLive.Show, :show
 
-      live "/cids", CidLive.Index, :index
-      live "/cids/new", CidLive.Index, :new
+      live "/chunks", ChunkLive.Index, :index
+      live "/chunks/new", ChunkLive.Index, :new
 
-      live "/cids/:id", CidLive.Show, :show
+      live "/chunks/:id", ChunkLive.Show, :show
 
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email

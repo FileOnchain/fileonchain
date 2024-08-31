@@ -1,8 +1,9 @@
-defmodule Fileonchain.Repo.Migrations.CreateCids do
+defmodule Fileonchain.Repo.Migrations.CreateChunks do
   use Ecto.Migration
 
   def change do
-    create table(:cids) do
+    create table(:chunks) do
+      add :hash, :string
       add :cid, :string
       add :data, :text
       add :tx_hash, :text

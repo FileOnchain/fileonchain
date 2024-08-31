@@ -1,61 +1,61 @@
-defmodule Fileonchain.CidsTest do
+defmodule Fileonchain.ChunksTest do
   use Fileonchain.DataCase
 
-  alias Fileonchain.Cids
+  alias Fileonchain.Chunks
 
-  describe "cids" do
-    alias Fileonchain.Cids.Cid
+  describe "chunks" do
+    alias Fileonchain.Chunks.Chunk
 
-    import Fileonchain.CidsFixtures
+    import Fileonchain.ChunksFixtures
 
-    @invalid_attrs %{data: nil, cid: nil}
+    @invalid_attrs %{data: nil, chunk: nil}
 
-    test "list_cids/0 returns all cids" do
-      cid = cid_fixture()
-      assert Cids.list_cids() == [cid]
+    test "list_chunks/0 returns all chunks" do
+      chunk = chunk_fixture()
+      assert Chunks.list_chunks() == [chunk]
     end
 
-    test "get_cid!/1 returns the cid with given id" do
-      cid = cid_fixture()
-      assert Cids.get_cid!(cid.id) == cid
+    test "get_chunk!/1 returns the chunk with given id" do
+      chunk = chunk_fixture()
+      assert Chunks.get_chunk!(chunk.id) == chunk
     end
 
-    test "create_cid/1 with valid data creates a cid" do
-      valid_attrs = %{data: "some data", cid: "some cid"}
+    test "create_chunk/1 with valid data creates a chunk" do
+      valid_attrs = %{data: "some data", chunk: "some chunk"}
 
-      assert {:ok, %Cid{} = cid} = Cids.create_cid(valid_attrs)
-      assert cid.data == "some data"
-      assert cid.cid == "some cid"
+      assert {:ok, %Chunk{} = chunk} = Chunks.create_chunk(valid_attrs)
+      assert chunk.data == "some data"
+      assert chunk.chunk == "some chunk"
     end
 
-    test "create_cid/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Cids.create_cid(@invalid_attrs)
+    test "create_chunk/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Chunks.create_chunk(@invalid_attrs)
     end
 
-    test "update_cid/2 with valid data updates the cid" do
-      cid = cid_fixture()
-      update_attrs = %{data: "some updated data", cid: "some updated cid"}
+    test "update_chunk/2 with valid data updates the chunk" do
+      chunk = chunk_fixture()
+      update_attrs = %{data: "some updated data", chunk: "some updated chunk"}
 
-      assert {:ok, %Cid{} = cid} = Cids.update_cid(cid, update_attrs)
-      assert cid.data == "some updated data"
-      assert cid.cid == "some updated cid"
+      assert {:ok, %Chunk{} = chunk} = Chunks.update_chunk(chunk, update_attrs)
+      assert chunk.data == "some updated data"
+      assert chunk.chunk == "some updated chunk"
     end
 
-    test "update_cid/2 with invalid data returns error changeset" do
-      cid = cid_fixture()
-      assert {:error, %Ecto.Changeset{}} = Cids.update_cid(cid, @invalid_attrs)
-      assert cid == Cids.get_cid!(cid.id)
+    test "update_chunk/2 with invalid data returns error changeset" do
+      chunk = chunk_fixture()
+      assert {:error, %Ecto.Changeset{}} = Chunks.update_chunk(chunk, @invalid_attrs)
+      assert chunk == Chunks.get_chunk!(chunk.id)
     end
 
-    test "delete_cid/1 deletes the cid" do
-      cid = cid_fixture()
-      assert {:ok, %Cid{}} = Cids.delete_cid(cid)
-      assert_raise Ecto.NoResultsError, fn -> Cids.get_cid!(cid.id) end
+    test "delete_chunk/1 deletes the chunk" do
+      chunk = chunk_fixture()
+      assert {:ok, %Chunk{}} = Chunks.delete_chunk(chunk)
+      assert_raise Ecto.NoResultsError, fn -> Chunks.get_chunk!(chunk.id) end
     end
 
-    test "change_cid/1 returns a cid changeset" do
-      cid = cid_fixture()
-      assert %Ecto.Changeset{} = Cids.change_cid(cid)
+    test "change_chunk/1 returns a chunk changeset" do
+      chunk = chunk_fixture()
+      assert %Ecto.Changeset{} = Chunks.change_chunk(chunk)
     end
   end
 end

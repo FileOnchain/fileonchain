@@ -97,22 +97,22 @@ defmodule FileonchainWeb.FileLive.FormComponent do
         chunk_size = 256 * 1024  # 256 KB
         chunks = chunk_binary(file_data, chunk_size)
 
-        cids_results =
+        chunks_results =
           Enum.map(chunks, fn chunk ->
-            Fileonchain.Cids.create_cid(%{cid: "dummy_cid", data: chunk})
+            Fileonchain.Chunks.create_chunk(%{hash: "dummy_hash", cid: "dummy_cid", data: chunk})
           end)
 
-        if Enum.all?(cids_results, fn {:ok, _} -> true; _ -> false end) do
+        if Enum.all?(chunks_results, fn {:ok, _} -> true; _ -> false end) do
           notify_parent({:saved, file})
 
           {:noreply,
            socket
-           |> put_flash(:info, "File and CIDs created successfully")
+           |> put_flash(:info, "File and Chunks created successfully")
            |> push_patch(to: socket.assigns.patch)}
         else
           {:noreply,
            socket
-           |> put_flash(:error, "File created but failed to create some CIDs")
+           |> put_flash(:error, "File created but failed to create some Chunks")
            |> push_patch(to: socket.assigns.patch)}
         end
 

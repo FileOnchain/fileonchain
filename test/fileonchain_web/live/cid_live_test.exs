@@ -1,112 +1,112 @@
-defmodule FileonchainWeb.CidLiveTest do
+defmodule FileonchainWeb.ChunkLiveTest do
   use FileonchainWeb.ConnCase
 
   import Phoenix.LiveViewTest
-  import Fileonchain.CidsFixtures
+  import Fileonchain.ChunksFixtures
 
-  @create_attrs %{data: "some data", cid: "some cid"}
-  @update_attrs %{data: "some updated data", cid: "some updated cid"}
-  @invalid_attrs %{data: nil, cid: nil}
+  @create_attrs %{data: "some data", chunk: "some chunk"}
+  @update_attrs %{data: "some updated data", chunk: "some updated chunk"}
+  @invalid_attrs %{data: nil, chunk: nil}
 
-  defp create_cid(_) do
-    cid = cid_fixture()
-    %{cid: cid}
+  defp create_chunk(_) do
+    chunk = chunk_fixture()
+    %{chunk: chunk}
   end
 
   describe "Index" do
-    setup [:create_cid]
+    setup [:create_chunk]
 
-    test "lists all cids", %{conn: conn, cid: cid} do
-      {:ok, _index_live, html} = live(conn, ~p"/cids")
+    test "lists all chunks", %{conn: conn, chunk: chunk} do
+      {:ok, _index_live, html} = live(conn, ~p"/chunks")
 
-      assert html =~ "Listing Cids"
-      assert html =~ cid.data
+      assert html =~ "Listing Chunks"
+      assert html =~ chunk.data
     end
 
-    test "saves new cid", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, ~p"/cids")
+    test "saves new chunk", %{conn: conn} do
+      {:ok, index_live, _html} = live(conn, ~p"/chunks")
 
-      assert index_live |> element("a", "New Cid") |> render_click() =~
-               "New Cid"
+      assert index_live |> element("a", "New Chunk") |> render_click() =~
+               "New Chunk"
 
-      assert_patch(index_live, ~p"/cids/new")
+      assert_patch(index_live, ~p"/chunks/new")
 
       assert index_live
-             |> form("#cid-form", cid: @invalid_attrs)
+             |> form("#chunk-form", chunk: @invalid_attrs)
              |> render_change() =~ "can&#39;t be blank"
 
       assert index_live
-             |> form("#cid-form", cid: @create_attrs)
+             |> form("#chunk-form", chunk: @create_attrs)
              |> render_submit()
 
-      assert_patch(index_live, ~p"/cids")
+      assert_patch(index_live, ~p"/chunks")
 
       html = render(index_live)
-      assert html =~ "Cid created successfully"
+      assert html =~ "Chunk created successfully"
       assert html =~ "some data"
     end
 
-    test "updates cid in listing", %{conn: conn, cid: cid} do
-      {:ok, index_live, _html} = live(conn, ~p"/cids")
+    test "updates chunk in listing", %{conn: conn, chunk: chunk} do
+      {:ok, index_live, _html} = live(conn, ~p"/chunks")
 
-      assert index_live |> element("#cids-#{cid.id} a", "Edit") |> render_click() =~
-               "Edit Cid"
+      assert index_live |> element("#chunks-#{chunk.id} a", "Edit") |> render_click() =~
+               "Edit Chunk"
 
-      assert_patch(index_live, ~p"/cids/#{cid}/edit")
+      assert_patch(index_live, ~p"/chunks/#{chunk}/edit")
 
       assert index_live
-             |> form("#cid-form", cid: @invalid_attrs)
+             |> form("#chunk-form", chunk: @invalid_attrs)
              |> render_change() =~ "can&#39;t be blank"
 
       assert index_live
-             |> form("#cid-form", cid: @update_attrs)
+             |> form("#chunk-form", chunk: @update_attrs)
              |> render_submit()
 
-      assert_patch(index_live, ~p"/cids")
+      assert_patch(index_live, ~p"/chunks")
 
       html = render(index_live)
-      assert html =~ "Cid updated successfully"
+      assert html =~ "Chunk updated successfully"
       assert html =~ "some updated data"
     end
 
-    test "deletes cid in listing", %{conn: conn, cid: cid} do
-      {:ok, index_live, _html} = live(conn, ~p"/cids")
+    test "deletes chunk in listing", %{conn: conn, chunk: chunk} do
+      {:ok, index_live, _html} = live(conn, ~p"/chunks")
 
-      assert index_live |> element("#cids-#{cid.id} a", "Delete") |> render_click()
-      refute has_element?(index_live, "#cids-#{cid.id}")
+      assert index_live |> element("#chunks-#{chunk.id} a", "Delete") |> render_click()
+      refute has_element?(index_live, "#chunks-#{chunk.id}")
     end
   end
 
   describe "Show" do
-    setup [:create_cid]
+    setup [:create_chunk]
 
-    test "displays cid", %{conn: conn, cid: cid} do
-      {:ok, _show_live, html} = live(conn, ~p"/cids/#{cid}")
+    test "displays chunk", %{conn: conn, chunk: chunk} do
+      {:ok, _show_live, html} = live(conn, ~p"/chunks/#{chunk}")
 
-      assert html =~ "Show Cid"
-      assert html =~ cid.data
+      assert html =~ "Show Chunk"
+      assert html =~ chunk.data
     end
 
-    test "updates cid within modal", %{conn: conn, cid: cid} do
-      {:ok, show_live, _html} = live(conn, ~p"/cids/#{cid}")
+    test "updates chunk within modal", %{conn: conn, chunk: chunk} do
+      {:ok, show_live, _html} = live(conn, ~p"/chunks/#{chunk}")
 
       assert show_live |> element("a", "Edit") |> render_click() =~
-               "Edit Cid"
+               "Edit Chunk"
 
-      assert_patch(show_live, ~p"/cids/#{cid}/show/edit")
+      assert_patch(show_live, ~p"/chunks/#{chunk}/show/edit")
 
       assert show_live
-             |> form("#cid-form", cid: @invalid_attrs)
+             |> form("#chunk-form", chunk: @invalid_attrs)
              |> render_change() =~ "can&#39;t be blank"
 
       assert show_live
-             |> form("#cid-form", cid: @update_attrs)
+             |> form("#chunk-form", chunk: @update_attrs)
              |> render_submit()
 
-      assert_patch(show_live, ~p"/cids/#{cid}")
+      assert_patch(show_live, ~p"/chunks/#{chunk}")
 
       html = render(show_live)
-      assert html =~ "Cid updated successfully"
+      assert html =~ "Chunk updated successfully"
       assert html =~ "some updated data"
     end
   end

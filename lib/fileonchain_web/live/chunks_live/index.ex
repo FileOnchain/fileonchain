@@ -1,12 +1,12 @@
-defmodule FileonchainWeb.CidLive.Index do
+defmodule FileonchainWeb.ChunkLive.Index do
   use FileonchainWeb, :live_view
 
-  alias Fileonchain.Cids
-  alias Fileonchain.Cids.Cid
+  alias Fileonchain.Chunks
+  alias Fileonchain.Chunks.Chunk
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :cids, Cids.list_cids())}
+    {:ok, stream(socket, :chunks, Chunks.list_chunks())}
   end
 
   @impl true
@@ -16,34 +16,34 @@ defmodule FileonchainWeb.CidLive.Index do
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Cid")
-    |> assign(:cid, %Cid{})
+    |> assign(:page_title, "New Chunk")
+    |> assign(:chunk, %Chunk{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Cids")
-    |> assign(:cid, nil)
+    |> assign(:page_title, "Listing Chunks")
+    |> assign(:chunk, nil)
   end
 
   @impl true
-  def handle_info({FileonchainWeb.CidLive.FormComponent, {:saved, cid}}, socket) do
-    {:noreply, stream_insert(socket, :cids, cid)}
+  def handle_info({FileonchainWeb.ChunkLive.FormComponent, {:saved, chunk}}, socket) do
+    {:noreply, stream_insert(socket, :chunks, chunk)}
   end
 
   @impl true
   def handle_event("hide", %{"id" => id}, socket) do
-    cid = Cids.get_cid!(id)
-    {:ok, _} = Cids.delete_cid(cid)
+    chunk = Chunks.get_chunk!(id)
+    {:ok, _} = Chunks.delete_chunk(chunk)
 
-    {:noreply, stream_delete(socket, :cids, cid)}
+    {:noreply, stream_delete(socket, :chunks, chunk)}
   end
 
   # Function to render CID preview
-  def render_cid_preview(cid) do
-    case get_image_type(cid.data) do
+  def render_chunk_preview(chunk) do
+    case get_image_type(chunk.data) do
       {:ok, mime_type} ->
-        "<img src=\"data:#{mime_type};base64,#{cid.data}\" alt=\"CID Preview\" style=\"max-width: 100px; max-height: 100px; object-fit: contain;\" />"
+        "<img src=\"data:#{mime_type};base64,#{chunk.data}\" alt=\"CID Preview\" style=\"max-width: 100px; max-height: 100px; object-fit: contain;\" />"
       :error ->
         "<span class=\"text-gray-500\">Preview not available</span>"
     end
@@ -64,7 +64,7 @@ defmodule FileonchainWeb.CidLive.Index do
   end
 
   # Function to format CID data size
-  def format_cid_size(data) do
+  def format_chunk_size(data) do
     case Base.decode64(data) do
       {:ok, decoded} ->
         byte_size = byte_size(decoded)

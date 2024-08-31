@@ -67,14 +67,16 @@ module.exports = {
       boxShadow: {
         'inner-lg': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
       },
+      textarea: {
+        base: 'w-full h-64 p-2 border rounded text-sm bg-brand-800 text-brand-200',
+        readonly: 'bg-brand-900 text-brand-300',
+      },
     },
   },
   plugins: [
     require("@tailwindcss/forms"),
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
-    //
-    //     <div class="phx-click-loading:animate-ping">
     //
     plugin(({addVariant}) => addVariant("phx-click-loading", [".phx-click-loading&", ".phx-click-loading &"])),
     plugin(({addVariant}) => addVariant("phx-submit-loading", [".phx-submit-loading&", ".phx-submit-loading &"])),

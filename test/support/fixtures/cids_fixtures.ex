@@ -1,21 +1,21 @@
-defmodule Fileonchain.CidsFixtures do
+defmodule Fileonchain.ChunksFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Fileonchain.Cids` context.
+  entities via the `Fileonchain.Chunks` context.
   """
 
   @doc """
-  Generate a cid.
+  Generate a chunk.
   """
-  def cid_fixture(attrs \\ %{}) do
-    {:ok, cid} =
+  def chunk_fixture(attrs \\ %{}) do
+    {:ok, chunk} =
       attrs
       |> Enum.into(%{
-        cid: "some cid",
+        chunk: "some chunk",
         data: "some data"
       })
-      |> Fileonchain.Cids.create_cid()
+      |> Fileonchain.Chunks.create_chunk()
 
-    cid
+    chunk
   end
 end

@@ -25,11 +25,8 @@
     </script>
   </head>
   <body class="bg-brand-900 text-white">
-    <ul class="relative z-10 flex flex-wrap items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end bg-brand-800 py-4 text-lg">
-      <%= if @current_user do %>
-        <li class="text-[1rem] leading-6 text-white">
-          <%= @current_user.email %>
-        </li>
+    <ul class="relative z-10 flex flex-wrap items-center gap-4 px-4 sm:px-6 lg:px-8 justify-between bg-brand-800 py-4 text-lg">
+      <div class="flex gap-4">
         <li>
           <.link
             href={~p"/files"}
@@ -40,47 +37,54 @@
         </li>
         <li>
           <.link
-            href={~p"/cids"}
+            href={~p"/chunks"}
             class="text-[1rem] leading-6 text-white font-semibold hover:text-brand-300"
           >
-            CIDs
+            Chunks
           </.link>
         </li>
-        <li>
-          <.link
-            href={~p"/users/settings"}
-            class="text-[1rem] leading-6 text-white font-semibold hover:text-brand-300"
-          >
-            Settings
-          </.link>
-        </li>
-        <li>
-          <.link
-            href={~p"/users/log_out"}
-            method="delete"
-            class="text-[1rem] leading-6 text-white font-semibold hover:text-brand-300"
-          >
-            Log out
-          </.link>
-        </li>
-      <% else %>
-        <li>
-          <.link
-            href={~p"/users/register"}
-            class="text-[1rem] leading-6 text-white font-semibold hover:text-brand-300"
-          >
-            Register
-          </.link>
-        </li>
-        <li>
-          <.link
-            href={~p"/users/log_in"}
-            class="text-[1rem] leading-6 text-white font-semibold hover:text-brand-300"
-          >
-            Log in
-          </.link>
-        </li>
-      <% end %>
+      </div>
+      <div class="flex gap-4">
+        <%= if @current_user do %>
+          <li class="text-[1rem] leading-6 text-white">
+            <%= @current_user.email %>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/settings"}
+              class="text-[1rem] leading-6 text-white font-semibold hover:text-brand-300"
+            >
+              Settings
+            </.link>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/log_out"}
+              method="delete"
+              class="text-[1rem] leading-6 text-white font-semibold hover:text-brand-300"
+            >
+              Log out
+            </.link>
+          </li>
+        <% else %>
+          <li>
+            <.link
+              href={~p"/users/register"}
+              class="text-[1rem] leading-6 text-white font-semibold hover:text-brand-300"
+            >
+              Register
+            </.link>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/log_in"}
+              class="text-[1rem] leading-6 text-white font-semibold hover:text-brand-300"
+            >
+              Log in
+            </.link>
+          </li>
+        <% end %>
+      </div>
     </ul>
     <%= @inner_content %>
   </body>

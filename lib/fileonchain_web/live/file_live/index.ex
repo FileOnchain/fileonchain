@@ -39,11 +39,11 @@ defmodule FileonchainWeb.FileLive.Index do
     {:noreply, stream_delete(socket, :files, file)}
   end
 
-  # Updated function to render file preview
-  def render_file_preview(file) do
+  # Updated function to render file preview with optional style
+  def render_file_preview(file, style \\ "max-width: 100px; max-height: 100px; object-fit: contain;") do
     case get_image_type(file.data) do
       {:ok, mime_type} ->
-        "<img src=\"data:#{mime_type};base64,#{file.data}\" alt=\"#{file.filename}\" style=\"max-width: 100px; max-height: 100px; object-fit: contain;\" />"
+        "<img src=\"data:#{mime_type};base64,#{file.data}\" alt=\"#{file.filename}\" style=\"#{style}\" />"
       :error ->
         "<span class=\"text-gray-500\">Preview not available</span>"
     end

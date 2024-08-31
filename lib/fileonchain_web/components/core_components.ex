@@ -674,4 +674,26 @@ defmodule FileonchainWeb.CoreComponents do
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
+
+  @doc """
+  Renders a styled textarea.
+
+  ## Examples
+
+      <.textarea value={@file.data} readonly />
+  """
+  attr :value, :string, required: true
+  attr :readonly, :boolean, default: false
+
+  def textarea(assigns) do
+    ~H"""
+    <textarea
+      class={[
+        "w-full textarea-base",
+        @readonly && "textarea-readonly"
+      ]}
+      readonly={@readonly}
+    ><%= @value %></textarea>
+    """
+  end
 end

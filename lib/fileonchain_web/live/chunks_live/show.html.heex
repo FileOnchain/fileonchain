@@ -1,0 +1,11 @@
+<.header>
+  Chunk <%= @chunk.id %>
+  <:subtitle>This is a chunk record from your database.</:subtitle>
+</.header>
+
+<.list>
+  <:item title="Chunk"><%= @chunk.chunk %></:item>
+  <:item title="Data"><%= @chunk.data %></:item>
+</.list>
+
+<.back navigate={~p"/chunks"}>Back to chunks</.back>
