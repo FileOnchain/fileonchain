@@ -41,17 +41,25 @@ defmodule FileonchainWeb.FileLive.Index do
 
   # Updated function to render file preview
   def render_file_preview(file) do
-    if is_png?(file.data) do
-      "<img src=\"data:image/png;base64,#{file.data}\" alt=\"#{file.filename}\" style=\"max-width: 100px; max-height: 100px;\" />"
-    else
-      "<span class=\"text-gray-500\">Preview not available</span>"
+    case get_image_type(file.data) do
+      {:ok, mime_type} ->
+        "<img src=\"data:#{mime_type};base64,#{file.data}\" alt=\"#{file.filename}\" style=\"max-width: 100px; max-height: 100px;\" />"
+      :error ->
+        "<span class=\"text-gray-500\">Preview not available</span>"
     end
   end
 
-  defp is_png?(data) do
+  defp get_image_type(data) do
     case Base.decode64(data) do
-      {:ok, decoded} -> String.starts_with?(decoded, <<137, 80, 78, 71, 13, 10, 26, 10>>)
-      _ -> false
+      {:ok, decoded} ->
+        cond do
+          String.starts_with?(decoded, <<0xFF, 0xD8, 0xFF>>) -> {:ok, "image/jpeg"}
+          String.starts_with?(decoded, <<0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A>>) -> {:ok, "image/png"}
+          String.starts_with?(decoded, "GIF87a") or String.starts_with?(decoded, "GIF89a") -> {:ok, "image/gif"}
+          String.starts_with?(decoded, "RIFF") and String.slice(decoded, 8, 4) == "WEBP" -> {:ok, "image/webp"}
+          true -> :error
+        end
+      _ -> :error
     end
   end
 end
