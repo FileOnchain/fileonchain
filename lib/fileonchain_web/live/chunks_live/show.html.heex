@@ -4,8 +4,17 @@
 </.header>
 
 <.list>
-  <:item title="Chunk"><%= @chunk.chunk %></:item>
-  <:item title="Data"><%= @chunk.data %></:item>
+  <:item title="Hash"><%= @chunk.hash %></:item>
+  <:item title="Cid"><%= @chunk.cid %></:item>
+  <:item title="Preview">
+    <%= raw(render_chunk_preview(@chunk)) %>
+  </:item>
+  <:item title="Size">
+    <%= format_chunk_size(@chunk.data) %>
+  </:item>
+  <:item title="Data">
+    <.textarea value={@chunk.data} readonly />
+  </:item>
 </.list>
 
 <.back navigate={~p"/chunks"}>Back to chunks</.back>

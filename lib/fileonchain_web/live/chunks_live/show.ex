@@ -17,4 +17,7 @@ defmodule FileonchainWeb.ChunkLive.Show do
   end
 
   defp page_title(:show), do: "Show Chunk"
+
+  # Import render_chunk_preview and format_chunk_size functions from Index
+  import FileonchainWeb.ChunkLive.Index, only: [render_chunk_preview: 1, format_chunk_size: 1]
 end
