@@ -56,24 +56,6 @@ defmodule Fileonchain.Cids do
   end
 
   @doc """
-  Updates a cid.
-
-  ## Examples
-
-      iex> update_cid(cid, %{field: new_value})
-      {:ok, %Cid{}}
-
-      iex> update_cid(cid, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_cid(%Cid{} = cid, attrs) do
-    cid
-    |> Cid.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
   Deletes a cid.
 
   ## Examples

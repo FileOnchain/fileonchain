@@ -56,24 +56,6 @@ defmodule Fileonchain.Files do
   end
 
   @doc """
-  Updates a file.
-
-  ## Examples
-
-      iex> update_file(file, %{field: new_value})
-      {:ok, %File{}}
-
-      iex> update_file(file, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_file(%File{} = file, attrs) do
-    file
-    |> File.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
   Deletes a file.
 
   ## Examples
