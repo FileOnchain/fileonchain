@@ -66,6 +66,13 @@ defmodule FileonchainWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{FileonchainWeb.UserAuth, :ensure_authenticated}] do
+      live "/files", FileLive.Index, :index
+      live "/files/new", FileLive.Index, :new
+      live "/files/:id/edit", FileLive.Index, :edit
+
+      live "/files/:id", FileLive.Show, :show
+      live "/files/:id/show/edit", FileLive.Show, :edit
+
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
