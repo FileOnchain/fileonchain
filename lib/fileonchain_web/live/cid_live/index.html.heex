@@ -9,7 +9,7 @@
     row_click={fn {_id, cid} -> JS.navigate(~p"/cids/#{cid}") end}
     class="w-full mt-6 bg-gray-800 rounded-lg"
   >
-    <:col :let={{_id, cid}} label="Cid" class="p-4 border-b border-gray-700"><%= cid.cid %></:col>
+    <:col :let={{_id, cid}} label="Cid" class="p-4 border-b border-gray-700 text-white"><%= cid.cid %></:col>
     <:col :let={{_id, cid}} label="Data" class="p-4 border-b border-gray-700"><%= cid.data %></:col>
     <:action :let={{_id, cid}} class="p-4 border-b border-gray-700">
       <div class="sr-only">

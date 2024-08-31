@@ -16,12 +16,12 @@
   >
     <:col :let={{_id, file}} label="Filename" class="p-4 border-b border-gray-700"><%= file.filename %></:col>
     <:col :let={{_id, file}} label="Data" class="p-4 border-b border-gray-700"><%= file.data %></:col>
-    <:action :let={{_id, file}} class="p-4 border-b border-gray-700">
+    <:action :let={{_id, file}}>
       <div class="sr-only">
         <.link navigate={~p"/files/#{file}"} class="text-blue-400 hover:underline">Show</.link>
       </div>
     </:action>
-    <:action :let={{id, file}} class="p-4 border-b border-gray-700">
+    <:action :let={{id, file}}>
       <.link
         phx-click={JS.push("hide", value: %{id: file.id}) |> hide("##{id}")}
         data-confirm="Are you sure?"
