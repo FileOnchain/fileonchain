@@ -1,6 +1,11 @@
 <div class="mx-auto max-w-4xl p-12 bg-brand-900 text-white rounded-lg shadow-lg">
   <.header class="text-center text-white text-2xl">
     Listing Chunks
+    <:actions>
+      <.link patch={~p"/files/new"} class="font-semibold hover:underline text-secondary-light">
+        <.button class="bg-secondary hover:bg-secondary-dark text-white p-4 rounded">New File</.button>
+      </.link>
+    </:actions>
   </.header>
 
   <.table
