@@ -50,7 +50,7 @@ defmodule FileonchainWeb.CoreComponents do
       data-cancel={JS.exec(@on_cancel, "phx-remove")}
       class="relative z-50 hidden"
     >
-      <div id={"#{@id}-bg"} class="bg-zinc-50/90 fixed inset-0 transition-opacity" aria-hidden="true" />
+      <div id={"#{@id}-bg"} class="bg-brand-900/90 fixed inset-0 transition-opacity" aria-hidden="true" />
       <div
         class="fixed inset-0 overflow-y-auto"
         aria-labelledby={"#{@id}-title"}
@@ -66,7 +66,7 @@ defmodule FileonchainWeb.CoreComponents do
               phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
               phx-key="escape"
               phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
-              class="shadow-zinc-700/10 ring-zinc-700/10 relative hidden rounded-2xl bg-gray-800 p-14 shadow-lg ring-1 transition"
+              class="shadow-brand-700/10 ring-brand-700/10 relative hidden rounded-2xl bg-brand-900 p-14 shadow-lg ring-1 transition"
             >
               <div class="absolute top-6 right-5">
                 <button
@@ -202,9 +202,9 @@ defmodule FileonchainWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 space-y-8 bg-transparent p-6 rounded-lg shadow-md max-w-md mx-auto">
+      <div class="mt-10 space-y-8 bg-brand-900 p-6 rounded-lg shadow-md">
         <%= render_slot(@inner_block, f) %>
-        <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6 bg-gray-900">
+        <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
           <%= render_slot(action, f) %>
         </div>
       </div>
@@ -231,7 +231,7 @@ defmodule FileonchainWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3",
+        "phx-submit-loading:opacity-75 rounded-lg bg-secondary hover:bg-secondary-dark py-2 px-3",
         "text-sm font-semibold leading-6 text-white active:text-white/80",
         @class
       ]}
@@ -318,7 +318,7 @@ defmodule FileonchainWeb.CoreComponents do
           name={@name}
           value="true"
           checked={@checked}
-          class="rounded border-zinc-300 text-zinc-900 focus:ring-0"
+          class="rounded border-brand-300 text-brand-900 focus:ring-0"
           {@rest}
         />
         <%= @label %>
@@ -335,7 +335,7 @@ defmodule FileonchainWeb.CoreComponents do
       <select
         id={@id}
         name={@name}
-        class="mt-2 block w-full rounded-md border border-gray-300 bg-gray-800 shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
+        class="mt-2 block w-full rounded-md border border-brand-300 bg-brand-800 shadow-sm focus:border-brand-400 focus:ring-0 sm:text-sm"
         multiple={@multiple}
         {@rest}
       >
@@ -355,8 +355,8 @@ defmodule FileonchainWeb.CoreComponents do
         id={@id}
         name={@name}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 min-h-[6rem]",
-          @errors == [] && "border-zinc-300 focus:border-zinc-400",
+          "mt-2 block w-full rounded-lg text-brand-900 focus:ring-0 sm:text-sm sm:leading-6 min-h-[6rem]",
+          @errors == [] && "border-brand-300 focus:border-brand-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
         {@rest}
@@ -369,17 +369,18 @@ defmodule FileonchainWeb.CoreComponents do
   # All other inputs text, datetime-local, url, password, etc. are handled here...
   def input(assigns) do
     ~H"""
-    <div>
+    <div phx-feedback-for={@name}>
       <.label for={@id}><%= @label %></.label>
       <input
         type={@type}
         name={@name}
-        id={@id}
-        value={Phoenix.HTML.Form.normalize_value(@type, @value)}
+        id={@id || @name}
+        value={@value}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
-          @errors == [] && "border-zinc-300 focus:border-zinc-400",
-          @errors != [] && "border-rose-400 focus:border-rose-400"
+          "mt-2 block w-full rounded-lg text-brand-900 focus:ring-2 focus:ring-secondary sm:text-sm sm:leading-6",
+          "phx-no-feedback:border-brand-300 phx-no-feedback:focus:border-secondary",
+          "border-brand-300 focus:border-secondary",
+          @errors != [] && "border-secondary-light focus:border-secondary-light"
         ]}
         {@rest}
       />
@@ -396,7 +397,7 @@ defmodule FileonchainWeb.CoreComponents do
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-white">
+    <label for={@for} class="block text-sm font-semibold leading-6 text-brand-200">
       <%= render_slot(@inner_block) %>
     </label>
     """
@@ -409,7 +410,7 @@ defmodule FileonchainWeb.CoreComponents do
 
   def error(assigns) do
     ~H"""
-    <p class="mt-3 flex gap-3 text-sm leading-6 text-rose-600">
+    <p class="mt-3 flex gap-3 text-sm leading-6 text-secondary-light phx-no-feedback:hidden">
       <.icon name="hero-exclamation-circle-mini" class="mt-0.5 h-5 w-5 flex-none" />
       <%= render_slot(@inner_block) %>
     </p>
@@ -429,10 +430,10 @@ defmodule FileonchainWeb.CoreComponents do
     ~H"""
     <header class={[@actions != [] && "flex items-center justify-between gap-6", @class]}>
       <div>
-        <h1 class="text-lg font-semibold leading-8 text-white">
+        <h1 class="text-lg font-semibold leading-8 text-brand-200">
           <%= render_slot(@inner_block) %>
         </h1>
-        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-gray-400">
+        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-brand-300">
           <%= render_slot(@subtitle) %>
         </p>
       </div>
@@ -475,7 +476,7 @@ defmodule FileonchainWeb.CoreComponents do
     ~H"""
     <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
       <table class="w-[40rem] mt-11 sm:w-full">
-        <thead class="text-sm text-left leading-6 text-zinc-500">
+        <thead class="text-sm text-left leading-6 text-brand-200">
           <tr>
             <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal"><%= col[:label] %></th>
             <th :if={@action != []} class="relative p-0 pb-4">
@@ -486,27 +487,27 @@ defmodule FileonchainWeb.CoreComponents do
         <tbody
           id={@id}
           phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
-          class="relative divide-y divide-zinc-700 border-t border-zinc-700 text-sm leading-6 text-white"
+          class="relative divide-y divide-brand-700 border-t border-brand-700 text-sm leading-6 text-white"
         >
-          <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-gray-700 transition-colors duration-200">
+          <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-brand-800 transition-colors duration-200">
             <td
               :for={{col, i} <- Enum.with_index(@col)}
               phx-click={@row_click && @row_click.(row)}
               class={["relative p-0", @row_click && "hover:cursor-pointer"]}
             >
               <div class="block py-4 pr-6">
-                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-gray-700 sm:rounded-l-xl" />
-                <span class={["relative", i == 0 && "font-semibold"]}>
+                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-brand-800 sm:rounded-l-xl" />
+                <span class={["relative", i == 0 && "font-semibold text-brand-300"]}>
                   <%= render_slot(col, @row_item.(row)) %>
                 </span>
               </div>
             </td>
             <td :if={@action != []} class="relative w-14 p-0 pr-4">
               <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
-                <span class="absolute -inset-y-px -right-4 left-0 group-hover:bg-gray-700 sm:rounded-r-xl" />
+                <span class="absolute -inset-y-px -right-4 left-0 group-hover:bg-brand-800 sm:rounded-r-xl" />
                 <span
                   :for={action <- @action}
-                  class="relative ml-4 font-semibold leading-6 text-white hover:text-zinc-300"
+                  class="relative ml-4 font-semibold leading-6 text-brand-300 hover:text-brand-100"
                 >
                   <%= render_slot(action, @row_item.(row)) %>
                 </span>
@@ -536,10 +537,10 @@ defmodule FileonchainWeb.CoreComponents do
   def list(assigns) do
     ~H"""
     <div class="mt-14">
-      <dl class="-my-4 divide-y divide-zinc-100">
+      <dl class="-my-4 divide-y divide-brand-100">
         <div :for={item <- @item} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
-          <dt class="w-1/4 flex-none text-zinc-500"><%= item.title %></dt>
-          <dd class="text-zinc-700"><%= render_slot(item) %></dd>
+          <dt class="w-1/4 flex-none text-brand-200"><%= item.title %></dt>
+          <dd class="text-brand-700"><%= render_slot(item) %></dd>
         </div>
       </dl>
     </div>
@@ -561,7 +562,7 @@ defmodule FileonchainWeb.CoreComponents do
     <div class="mt-16">
       <.link
         navigate={@navigate}
-        class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
+        class="text-sm font-semibold leading-6 text-brand-300 hover:text-brand-100"
       >
         <.icon name="hero-arrow-left-solid" class="h-3 w-3" />
         <%= render_slot(@inner_block) %>

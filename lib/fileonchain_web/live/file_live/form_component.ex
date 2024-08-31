@@ -15,7 +15,7 @@ defmodule FileonchainWeb.FileLive.FormComponent do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="overlay mx-auto max-w-md p-12 bg-gray-900 bg-opacity-50 text-white rounded-lg shadow-lg">
+    <div class="overlay mx-auto max-w-md p-12 bg-brand-900 bg-opacity-50 text-white rounded-lg shadow-lg">
       <.header class="text-center text-white text-2xl">
         <%= @title %>
         <:subtitle>Use this form to manage file records in your database.</:subtitle>
@@ -27,33 +27,32 @@ defmodule FileonchainWeb.FileLive.FormComponent do
         phx-target={@myself}
         phx-change="validate"
         phx-submit="save"
-        class="space-y-6 bg-gray-900"
+        class="space-y-6 bg-brand-800"
       >
-        <.input field={@form[:filename]} type="text" label="Filename" required class="w-full p-4 border border-gray-700 rounded bg-gray-800 text-white" />
+        <.input field={@form[:filename]} type="text" label="Filename" required class="w-full p-4 border border-brand-700 rounded bg-brand-900 text-white" />
 
         <div id="dropzone-wrapper" class="mt-4" phx-drop-target={@uploads.file.ref}>
           <.live_file_input upload={@uploads.file} class="hidden" />
-          <div class="dropzone bg-gray-800 border-2 border-dashed border-gray-600 rounded-lg p-6 text-center cursor-pointer">
+          <div class="dropzone bg-brand-900 border-2 border-dashed border-brand-600 rounded-lg p-6 text-center cursor-pointer">
             <%= if Enum.empty?(@uploads.file.entries) do %>
-              <p class="text-gray-400">Drag and drop a file here, or click to select</p>
+              <p class="text-brand-400">Drag and drop a file here, or click to select</p>
             <% else %>
               <%= for entry <- @uploads.file.entries do %>
-                <div class="text-sm text-gray-400"><%= entry.client_name %></div>
+                <div class="text-sm text-brand-400"><%= entry.client_name %></div>
                 <div class="mt-2">
-                  <progress value={entry.progress} max="100" class="w-full"><%= entry.progress %>%</progress>
+                  <progress value={entry.progress} max="100" class="w-full bg-brand-700"><%= entry.progress %>%</progress>
                 </div>
-                <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref} class="mt-2 text-red-500">&times; Cancel</button>
               <% end %>
             <% end %>
           </div>
         </div>
 
         <%= for err <- upload_errors(@uploads.file) do %>
-          <div class="text-red-500 text-sm"><%= error_to_string(err) %></div>
+          <div class="text-secondary-light text-sm"><%= error_to_string(err) %></div>
         <% end %>
 
         <:actions>
-          <.button phx-disable-with="Saving..." class="w-full bg-blue-500 text-white p-4 rounded hover:bg-blue-600">
+          <.button phx-disable-with="Saving..." class="w-full bg-secondary hover:bg-secondary-dark text-white p-4 rounded">
             Save File
           </.button>
         </:actions>
