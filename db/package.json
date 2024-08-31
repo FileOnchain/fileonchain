@@ -1,0 +1,25 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FileOnchain/fileonchain"
+  },
+  "author": {
+    "name": "FileOnchain",
+    "url": "https://www.fileonchain.app"
+  },
+  "bugs": {
+    "url": "https://github.com/FileOnchain/fileonchain/issues"
+  },
+  "scripts": {
+    "console": "hasura console",
+    "metadata": "hasura metadata apply --skip-update-check",
+    "start": "yarn metadata && yarn console"
+  },
+  "devDependencies": {
+    "hasura-cli": "2.36.2"
+  }
+}
