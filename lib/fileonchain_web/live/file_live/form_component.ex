@@ -80,7 +80,7 @@ defmodule FileonchainWeb.FileLive.FormComponent do
   def handle_event("save", %{"file" => file_params}, socket) do
     uploaded_files =
       consume_uploaded_entries(socket, :file, fn %{path: path}, _entry ->
-        {:ok, File.read!(path)}
+        {:ok, Base.encode64(File.read!(path))}
       end)
 
     file_params = Map.put(file_params, "data", List.first(uploaded_files) || "")

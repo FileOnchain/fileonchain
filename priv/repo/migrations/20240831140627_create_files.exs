@@ -4,7 +4,7 @@ defmodule Fileonchain.Repo.Migrations.CreateFiles do
   def change do
     create table(:files) do
       add :filename, :text
-      add :data, :text
+      add :data, :bytes
 
       timestamps(type: :utc_datetime)
     end
