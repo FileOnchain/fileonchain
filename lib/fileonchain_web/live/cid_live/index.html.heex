@@ -1,42 +1,29 @@
-<.header>
-  Listing Cids
-  <:actions>
-    <.link patch={~p"/cids/new"}>
-      <.button>New Cid</.button>
-    </.link>
-  </:actions>
-</.header>
+<div class="mx-auto max-w-4xl p-12 bg-gray-900 text-white rounded-lg shadow-lg">
+  <.header class="text-center text-white text-2xl">
+    Listing Cids
+  </.header>
 
-<.table
-  id="cids"
-  rows={@streams.cids}
-  row_click={fn {_id, cid} -> JS.navigate(~p"/cids/#{cid}") end}
->
-  <:col :let={{_id, cid}} label="Cid"><%= cid.cid %></:col>
-  <:col :let={{_id, cid}} label="Data"><%= cid.data %></:col>
-  <:action :let={{_id, cid}}>
-    <div class="sr-only">
-      <.link navigate={~p"/cids/#{cid}"}>Show</.link>
-    </div>
-    <.link patch={~p"/cids/#{cid}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={{id, cid}}>
-    <.link
-      phx-click={JS.push("delete", value: %{id: cid.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
-  </:action>
-</.table>
-
-<.modal :if={@live_action in [:new, :edit]} id="cid-modal" show on_cancel={JS.patch(~p"/cids")}>
-  <.live_component
-    module={FileonchainWeb.CidLive.FormComponent}
-    id={@cid.id || :new}
-    title={@page_title}
-    action={@live_action}
-    cid={@cid}
-    patch={~p"/cids"}
-  />
-</.modal>
+  <.table
+    id="cids"
+    rows={@streams.cids}
+    row_click={fn {_id, cid} -> JS.navigate(~p"/cids/#{cid}") end}
+    class="w-full mt-6 bg-gray-800 rounded-lg"
+  >
+    <:col :let={{_id, cid}} label="Cid" class="p-4 border-b border-gray-700"><%= cid.cid %></:col>
+    <:col :let={{_id, cid}} label="Data" class="p-4 border-b border-gray-700"><%= cid.data %></:col>
+    <:action :let={{_id, cid}} class="p-4 border-b border-gray-700">
+      <div class="sr-only">
+        <.link navigate={~p"/cids/#{cid}"} class="text-blue-400 hover:underline">Show</.link>
+      </div>
+    </:action>
+    <:action :let={{id, cid}} class="p-4 border-b border-gray-700">
+      <.link
+        phx-click={JS.push("hide", value: %{id: cid.id}) |> hide("##{id}")}
+        data-confirm="Are you sure?"
+        class="text-red-500 hover:underline"
+      >
+        Hide
+      </.link>
+    </:action>
+  </.table>
+</div>

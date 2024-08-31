@@ -17,5 +17,4 @@ defmodule FileonchainWeb.FileLive.Show do
   end
 
   defp page_title(:show), do: "Show File"
-  defp page_title(:edit), do: "Edit File"
 end

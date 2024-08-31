@@ -24,16 +24,32 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body class="bg-white">
-    <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
+  <body class="bg-gray-900 text-white">
+    <ul class="relative z-10 flex flex-wrap items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end bg-gray-800 py-4 text-lg">
       <%= if @current_user do %>
-        <li class="text-[0.8125rem] leading-6 text-zinc-900">
+        <li class="text-[1rem] leading-6 text-white">
           <%= @current_user.email %>
         </li>
         <li>
           <.link
+            href={~p"/files"}
+            class="text-[1rem] leading-6 text-white font-semibold hover:text-gray-500"
+          >
+            Files
+          </.link>
+        </li>
+        <li>
+          <.link
+            href={~p"/cids"}
+            class="text-[1rem] leading-6 text-white font-semibold hover:text-gray-500"
+          >
+            CIDs
+          </.link>
+        </li>
+        <li>
+          <.link
             href={~p"/users/settings"}
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            class="text-[1rem] leading-6 text-white font-semibold hover:text-gray-500"
           >
             Settings
           </.link>
@@ -42,7 +58,7 @@
           <.link
             href={~p"/users/log_out"}
             method="delete"
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            class="text-[1rem] leading-6 text-white font-semibold hover:text-gray-500"
           >
             Log out
           </.link>
@@ -51,7 +67,7 @@
         <li>
           <.link
             href={~p"/users/register"}
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            class="text-[1rem] leading-6 text-white font-semibold hover:text-gray-500"
           >
             Register
           </.link>
@@ -59,7 +75,7 @@
         <li>
           <.link
             href={~p"/users/log_in"}
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            class="text-[1rem] leading-6 text-white font-semibold hover:text-gray-500"
           >
             Log in
           </.link>

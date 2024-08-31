@@ -17,5 +17,4 @@ defmodule FileonchainWeb.CidLive.Show do
   end
 
   defp page_title(:show), do: "Show Cid"
-  defp page_title(:edit), do: "Edit Cid"
 end

@@ -49,21 +49,6 @@ defmodule FileonchainWeb.CidLive.FormComponent do
     save_cid(socket, socket.assigns.action, cid_params)
   end
 
-  defp save_cid(socket, :edit, cid_params) do
-    case Cids.update_cid(socket.assigns.cid, cid_params) do
-      {:ok, cid} ->
-        notify_parent({:saved, cid})
-
-        {:noreply,
-         socket
-         |> put_flash(:info, "Cid updated successfully")
-         |> push_patch(to: socket.assigns.patch)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, form: to_form(changeset))}
-    end
-  end
-
   defp save_cid(socket, :new, cid_params) do
     case Cids.create_cid(cid_params) do
       {:ok, cid} ->

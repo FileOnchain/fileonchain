@@ -14,12 +14,6 @@ defmodule FileonchainWeb.FileLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
-    socket
-    |> assign(:page_title, "Edit File")
-    |> assign(:file, Files.get_file!(id))
-  end
-
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New File")
@@ -38,7 +32,7 @@ defmodule FileonchainWeb.FileLive.Index do
   end
 
   @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
+  def handle_event("hide", %{"id" => id}, socket) do
     file = Files.get_file!(id)
     {:ok, _} = Files.delete_file(file)
 

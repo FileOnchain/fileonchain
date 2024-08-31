@@ -5,24 +5,26 @@ defmodule FileonchainWeb.UserConfirmationInstructionsLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+    <div class="mx-auto max-w-md p-12 bg-gray-900 text-white rounded-lg shadow-lg">
+      <.header class="text-center text-white text-2xl">
         No confirmation instructions received?
-        <:subtitle>We'll send a new confirmation link to your inbox</:subtitle>
+        <:subtitle>
+          We'll send a new confirmation link to your inbox
+        </:subtitle>
       </.header>
 
-      <.simple_form for={@form} id="resend_confirmation_form" phx-submit="send_instructions">
-        <.input field={@form[:email]} type="email" placeholder="Email" required />
+      <.simple_form for={@form} id="resend_confirmation_form" phx-submit="send_instructions" class="space-y-6 bg-gray-900">
+        <.input field={@form[:email]} type="email" placeholder="Email" required class="w-full p-4 border border-gray-700 rounded bg-gray-800 text-white" />
         <:actions>
-          <.button phx-disable-with="Sending..." class="w-full">
+          <.button phx-disable-with="Sending..." class="w-full bg-blue-500 text-white p-4 rounded hover:bg-blue-600">
             Resend confirmation instructions
           </.button>
         </:actions>
       </.simple_form>
 
       <p class="text-center mt-4">
-        <.link href={~p"/users/register"}>Register</.link>
-        | <.link href={~p"/users/log_in"}>Log in</.link>
+        <.link href={~p"/users/register"} class="font-semibold text-blue-400 hover:underline">Register</.link>
+        | <.link href={~p"/users/log_in"} class="font-semibold text-blue-400 hover:underline">Log in</.link>
       </p>
     </div>
     """

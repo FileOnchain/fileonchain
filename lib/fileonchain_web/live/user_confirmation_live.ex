@@ -5,19 +5,23 @@ defmodule FileonchainWeb.UserConfirmationLive do
 
   def render(%{live_action: :edit} = assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">Confirm Account</.header>
+    <div class="mx-auto max-w-md p-12 bg-gray-900 text-white rounded-lg shadow-lg">
+      <.header class="text-center text-white text-2xl">
+        Confirm Account
+      </.header>
 
-      <.simple_form for={@form} id="confirmation_form" phx-submit="confirm_account">
+      <.simple_form for={@form} id="confirmation_form" phx-submit="confirm_account" class="space-y-6 bg-gray-900">
         <input type="hidden" name={@form[:token].name} value={@form[:token].value} />
         <:actions>
-          <.button phx-disable-with="Confirming..." class="w-full">Confirm my account</.button>
+          <.button phx-disable-with="Confirming..." class="w-full bg-blue-500 text-white p-4 rounded hover:bg-blue-600">
+            Confirm my account
+          </.button>
         </:actions>
       </.simple_form>
 
       <p class="text-center mt-4">
-        <.link href={~p"/users/register"}>Register</.link>
-        | <.link href={~p"/users/log_in"}>Log in</.link>
+        <.link href={~p"/users/register"} class="font-semibold text-brand hover:underline text-blue-400">Register</.link>
+        | <.link href={~p"/users/log_in"} class="font-semibold text-brand hover:underline text-blue-400">Log in</.link>
       </p>
     </div>
     """

@@ -6,12 +6,12 @@ defmodule FileonchainWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+    <div class="mx-auto max-w-md p-12 bg-gray-900 text-white rounded-lg shadow-lg">
+      <.header class="text-center text-white text-2xl">
         Register for an account
         <:subtitle>
           Already registered?
-          <.link navigate={~p"/users/log_in"} class="font-semibold text-brand hover:underline">
+          <.link navigate={~p"/users/log_in"} class="font-semibold text-brand hover:underline text-blue-400">
             Log in
           </.link>
           to your account now.
@@ -26,16 +26,19 @@ defmodule FileonchainWeb.UserRegistrationLive do
         phx-trigger-action={@trigger_submit}
         action={~p"/users/log_in?_action=registered"}
         method="post"
+        class="space-y-6 bg-gray-900"
       >
         <.error :if={@check_errors}>
           Oops, something went wrong! Please check the errors below.
         </.error>
 
-        <.input field={@form[:email]} type="email" label="Email" required />
-        <.input field={@form[:password]} type="password" label="Password" required />
+        <.input field={@form[:email]} type="email" label="Email" required class="w-full p-4 border border-gray-700 rounded bg-gray-800 text-white" />
+        <.input field={@form[:password]} type="password" label="Password" required class="w-full p-4 border border-gray-700 rounded bg-gray-800 text-white" />
 
         <:actions>
-          <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
+          <.button phx-disable-with="Creating account..." class="w-full bg-blue-500 text-white p-4 rounded hover:bg-blue-600">
+            Create an account
+          </.button>
         </:actions>
       </.simple_form>
     </div>

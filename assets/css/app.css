@@ -1,5 +1,10 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "phoenix_live_view_dropzone/dist/phoenix_live_view_dropzone.css";
 
 /* This file is for your main application CSS */
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value for transparency */
+}

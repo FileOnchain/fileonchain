@@ -1,42 +1,45 @@
-<.header>
-  Listing Files
-  <:actions>
-    <.link patch={~p"/files/new"}>
-      <.button>New File</.button>
-    </.link>
-  </:actions>
-</.header>
+<div class="mx-auto max-w-4xl p-12 bg-gray-900 text-white rounded-lg shadow-lg">
+  <.header class="text-center text-white text-2xl">
+    Listing Files
+    <:actions>
+      <.link patch={~p"/files/new"} class="font-semibold hover:underline text-blue-400">
+        <.button class="bg-blue-500 text-white p-4 rounded hover:bg-blue-600">New File</.button>
+      </.link>
+    </:actions>
+  </.header>
 
-<.table
-  id="files"
-  rows={@streams.files}
-  row_click={fn {_id, file} -> JS.navigate(~p"/files/#{file}") end}
->
-  <:col :let={{_id, file}} label="Filename"><%= file.filename %></:col>
-  <:col :let={{_id, file}} label="Data"><%= file.data %></:col>
-  <:action :let={{_id, file}}>
-    <div class="sr-only">
-      <.link navigate={~p"/files/#{file}"}>Show</.link>
-    </div>
-    <.link patch={~p"/files/#{file}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={{id, file}}>
-    <.link
-      phx-click={JS.push("delete", value: %{id: file.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
-  </:action>
-</.table>
+  <.table
+    id="files"
+    rows={@streams.files}
+    row_click={fn {_id, file} -> JS.navigate(~p"/files/#{file}") end}
+    class="w-full mt-6 bg-gray-800 rounded-lg"
+  >
+    <:col :let={{_id, file}} label="Filename" class="p-4 border-b border-gray-700"><%= file.filename %></:col>
+    <:col :let={{_id, file}} label="Data" class="p-4 border-b border-gray-700"><%= file.data %></:col>
+    <:action :let={{_id, file}} class="p-4 border-b border-gray-700">
+      <div class="sr-only">
+        <.link navigate={~p"/files/#{file}"} class="text-blue-400 hover:underline">Show</.link>
+      </div>
+    </:action>
+    <:action :let={{id, file}} class="p-4 border-b border-gray-700">
+      <.link
+        phx-click={JS.push("hide", value: %{id: file.id}) |> hide("##{id}")}
+        data-confirm="Are you sure?"
+        class="text-red-500 hover:underline"
+      >
+        Hide
+      </.link>
+    </:action>
+  </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="file-modal" show on_cancel={JS.patch(~p"/files")}>
-  <.live_component
-    module={FileonchainWeb.FileLive.FormComponent}
-    id={@file.id || :new}
-    title={@page_title}
-    action={@live_action}
-    file={@file}
-    patch={~p"/files"}
-  />
-</.modal>
+  <.modal :if={@live_action in [:new]} id="file-modal" show on_cancel={JS.patch(~p"/files")}>
+    <.live_component
+      module={FileonchainWeb.FileLive.FormComponent}
+      id={@file.id || :new}
+      title={@page_title}
+      action={@live_action}
+      file={@file}
+      patch={~p"/files"}
+    />
+  </.modal>
+</div>
