@@ -10,7 +10,12 @@
     class="w-full mt-6 bg-gray-800 rounded-lg"
   >
     <:col :let={{_id, cid}} label="Cid" class="p-4 border-b border-gray-700 text-white"><%= cid.cid %></:col>
-    <:col :let={{_id, cid}} label="Data" class="p-4 border-b border-gray-700"><%= cid.data %></:col>
+    <:col :let={{_id, cid}} label="Data" class="p-4 border-b border-gray-700">
+      <%= raw(FileonchainWeb.CidLive.Index.render_cid_preview(cid)) %>
+    </:col>
+    <:col :let={{_id, cid}} label="Size" class="p-4 border-b border-gray-700 text-white">
+      <%= FileonchainWeb.CidLive.Index.format_cid_size(cid.data) %>
+    </:col>
     <:action :let={{_id, cid}} class="p-4 border-b border-gray-700">
       <div class="sr-only">
         <.link navigate={~p"/cids/#{cid}"} class="text-blue-400 hover:underline">Show</.link>

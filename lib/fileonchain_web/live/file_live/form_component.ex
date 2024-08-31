@@ -98,8 +98,8 @@ defmodule FileonchainWeb.FileLive.FormComponent do
         chunks = chunk_binary(file_data, chunk_size)
 
         cids_results =
-          Enum.map(chunks, fn _chunk ->
-            Fileonchain.Cids.create_cid(%{cid: "dummy_cid", data: "dummy_data"})
+          Enum.map(chunks, fn chunk ->
+            Fileonchain.Cids.create_cid(%{cid: "dummy_cid", data: chunk})
           end)
 
         if Enum.all?(cids_results, fn {:ok, _} -> true; _ -> false end) do
@@ -107,12 +107,12 @@ defmodule FileonchainWeb.FileLive.FormComponent do
 
           {:noreply,
            socket
-           |> put_flash(:info, "File and mock CIDs created successfully")
+           |> put_flash(:info, "File and CIDs created successfully")
            |> push_patch(to: socket.assigns.patch)}
         else
           {:noreply,
            socket
-           |> put_flash(:error, "File created but failed to create some mock CIDs")
+           |> put_flash(:error, "File created but failed to create some CIDs")
            |> push_patch(to: socket.assigns.patch)}
         end
 
