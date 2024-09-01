@@ -46,3 +46,8 @@ dist
 
 # SSH Keys
 .ssh/
+
+# Environment variables
+.env
+.staging.env
+.prod.env
