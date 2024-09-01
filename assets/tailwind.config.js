@@ -16,9 +16,7 @@ module.exports = {
       colors: {
         brand: {
           DEFAULT: "#00CCFF",
-          light: "#33D6FF",
-          dark: "#0099CC",
-          50: "#E6F9FF",
+          50: "#E8F7F6",
           100: "#CCF3FF",
           200: "#99E6FF",
           300: "#66DAFF",
@@ -30,14 +28,30 @@ module.exports = {
           900: "#002933",
         },
         secondary: {
-          DEFAULT: "#FF6B6B",
-          light: "#FF9999",
-          dark: "#CC5555",
+          DEFAULT: "#4ECDC4",
+          50: "#E6F9FF",
+          100: "#D1EFED",
+          200: "#A3E0DC",
+          300: "#76D1CA",
+          400: "#4ECDC4",
+          500: "#33B3AA",
+          600: "#288C85",
+          700: "#1D6560",
+          800: "#133E3B",
+          900: "#091716",
         },
         accent: {
-          DEFAULT: "#4ECDC4",
-          light: "#7FDAD3",
-          dark: "#3DA39B",
+          DEFAULT: "#FF6B6B",
+          50: "#FFF0F0",
+          100: "#FFE1E1",
+          200: "#FFC4C4",
+          300: "#FFA7A7",
+          400: "#FF8989",
+          500: "#FF6B6B",
+          600: "#FF3D3D",
+          700: "#FF0F0F",
+          800: "#E10000",
+          900: "#B30000",
         },
       },
       fontFamily: {
@@ -66,10 +80,19 @@ module.exports = {
       },
       boxShadow: {
         'inner-lg': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+        'brand': '0 4px 6px -1px rgba(0, 204, 255, 0.1), 0 2px 4px -1px rgba(0, 204, 255, 0.06)',
+        'secondary': '0 4px 6px -1px rgba(78, 205, 196, 0.1), 0 2px 4px -1px rgba(78, 205, 196, 0.06)',
+        'accent': '0 4px 6px -1px rgba(255, 107, 107, 0.1), 0 2px 4px -1px rgba(255, 107, 107, 0.06)',
+      },
+      borderWidth: {
+        '3': '3px',
       },
       textarea: {
         base: 'w-full h-64 p-2 border rounded text-sm bg-brand-800 text-brand-200',
         readonly: 'bg-brand-900 text-brand-300',
+      },
+      animation: {
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
     },
   },
@@ -122,6 +145,20 @@ module.exports = {
           }
         }
       }, {values})
-    })
+    }),
+    plugin(({ addUtilities }) => {
+      const newUtilities = {
+        '.text-shadow': {
+          textShadow: '0 2px 4px rgba(0,0,0,0.10)',
+        },
+        '.text-shadow-md': {
+          textShadow: '0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08)',
+        },
+        '.text-shadow-lg': {
+          textShadow: '0 15px 30px rgba(0,0,0,0.11), 0 5px 15px rgba(0,0,0,0.08)',
+        },
+      }
+      addUtilities(newUtilities)
+    }),
   ]
 }

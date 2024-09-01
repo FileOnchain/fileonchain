@@ -61,7 +61,8 @@ defmodule Fileonchain.MixProject do
       {:jason, "~> 1.4.4"},
       {:dns_cluster, "~> 0.1.3"},
       {:bandit, "~> 1.5.7"},
-      {:blake3, "~> 1.0.0"}
+      {:blake3, "~> 1.0.0"},
+      {:httpoison, "~> 2.2.1"}
     ]
   end
 

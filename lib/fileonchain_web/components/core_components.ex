@@ -231,8 +231,10 @@ defmodule FileonchainWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-secondary hover:bg-secondary-dark py-2 px-3",
+        "phx-submit-loading:opacity-75 rounded-lg bg-secondary hover:bg-secondary-600 py-2 px-3",
         "text-sm font-semibold leading-6 text-white active:text-white/80",
+        "transition duration-150 ease-in-out",
+        "shadow-secondary hover:shadow-brand",
         @class
       ]}
       {@rest}
@@ -380,7 +382,9 @@ defmodule FileonchainWeb.CoreComponents do
           "mt-2 block w-full rounded-lg text-brand-900 focus:ring-2 focus:ring-secondary sm:text-sm sm:leading-6",
           "phx-no-feedback:border-brand-300 phx-no-feedback:focus:border-secondary",
           "border-brand-300 focus:border-secondary",
-          @errors != [] && "border-secondary-light focus:border-secondary-light"
+          "transition duration-150 ease-in-out",
+          "shadow-sm hover:shadow-brand",
+          @errors != [] && "border-accent focus:border-accent"
         ]}
         {@rest}
       />
@@ -428,7 +432,7 @@ defmodule FileonchainWeb.CoreComponents do
 
   def header(assigns) do
     ~H"""
-    <header class={[@actions != [] && "flex items-center justify-between gap-6", @class]}>
+    <header class={["border-b-3 border-brand-600 pb-5 mb-5", @actions != [] && "flex items-center justify-between gap-6", @class]}>
       <div>
         <h1 class="text-lg font-semibold leading-8 text-brand-200">
           <%= render_slot(@inner_block) %>
@@ -474,12 +478,12 @@ defmodule FileonchainWeb.CoreComponents do
       end
 
     ~H"""
-    <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0 mt-6 bg-brand-800 rounded-lg">
+    <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0 mt-6 bg-brand-800 rounded-lg shadow-brand">
       <table class="w-full mt-11 sm:w-full">
-        <thead class="text-sm text-left leading-6 text-brand-200">
+        <thead class="text-sm text-left leading-6 text-brand-200 bg-brand-700">
           <tr>
-            <th :for={col <- @col} class="pb-4 pr-6 font-normal p-4 border-b border-brand-700"><%= col[:label] %></th>
-            <th :if={@action != []} class="relative p-0 pb-4">
+            <th :for={col <- @col} class="p-4 font-semibold"><%= col[:label] %></th>
+            <th :if={@action != []} class="relative p-4">
               <span class="sr-only"><%= gettext("Actions") %></span>
             </th>
           </tr>
@@ -489,25 +493,25 @@ defmodule FileonchainWeb.CoreComponents do
           phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
           class="relative divide-y divide-brand-700 border-t border-brand-700 text-sm leading-6 text-white"
         >
-          <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-brand-800 transition-colors duration-200">
+          <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-brand-700 transition-colors duration-200">
             <td
               :for={{col, i} <- Enum.with_index(@col)}
               phx-click={@row_click && @row_click.(row)}
-              class={["relative p-0", @row_click && "hover:cursor-pointer"]}
+              class={["relative p-4", @row_click && "hover:cursor-pointer"]}
             >
               <div class="block py-4 pr-6">
-                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-brand-800 sm:rounded-l-xl" />
-                <span class={["relative", i == 0 && "font-semibold text-brand-300"]}>
+                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-brand-700 sm:rounded-l-xl" />
+                <span class={["relative", i == 0 && "font-semibold text-secondary"]}>
                   <%= render_slot(col, @row_item.(row)) %>
                 </span>
               </div>
             </td>
-            <td :if={@action != []} class="relative w-14 p-0 pr-4">
+            <td :if={@action != []} class="relative w-14 p-4">
               <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
-                <span class="absolute -inset-y-px -right-4 left-0 group-hover:bg-brand-800 sm:rounded-r-xl" />
+                <span class="absolute -inset-y-px -right-4 left-0 group-hover:bg-brand-700 sm:rounded-r-xl" />
                 <span
                   :for={action <- @action}
-                  class="relative ml-4 font-semibold leading-6 text-brand-300 hover:text-brand-100"
+                  class="relative ml-4 font-semibold leading-6 text-accent hover:text-accent-300"
                 >
                   <%= render_slot(action, @row_item.(row)) %>
                 </span>
@@ -562,9 +566,9 @@ defmodule FileonchainWeb.CoreComponents do
     <div class="mt-16">
       <.link
         navigate={@navigate}
-        class="text-sm font-semibold leading-6 text-brand-300 hover:text-brand-100"
+        class="text-sm font-semibold leading-6 text-secondary hover:text-secondary-300 flex items-center"
       >
-        <.icon name="hero-arrow-left-solid" class="h-3 w-3" />
+        <.icon name="hero-arrow-left-solid" class="h-4 w-4 mr-1" />
         <%= render_slot(@inner_block) %>
       </.link>
     </div>

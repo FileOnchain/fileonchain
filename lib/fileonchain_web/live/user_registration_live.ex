@@ -1,8 +1,10 @@
 defmodule FileonchainWeb.UserRegistrationLive do
   use FileonchainWeb, :live_view
+  require Logger
 
   alias Fileonchain.Accounts
   alias Fileonchain.Accounts.User
+  alias Fileonchain.Notifications.Slack
 
   def render(assigns) do
     ~H"""
@@ -57,18 +59,32 @@ defmodule FileonchainWeb.UserRegistrationLive do
   end
 
   def handle_event("save", %{"user" => user_params}, socket) do
+    Logger.info("Attempting to register new user with params: #{inspect(user_params)}")
     case Accounts.register_user(user_params) do
       {:ok, user} ->
+        Logger.info("User registered successfully: #{user.email}")
         {:ok, _} =
           Accounts.deliver_user_confirmation_instructions(
             user,
             &url(~p"/users/confirm/#{&1}")
           )
 
+        # Send Slack notification
+        case Slack.send_message("New user registered: #{user.email}") do
+          {:ok, _} ->
+            Logger.info("Slack notification sent for new user: #{user.email}")
+            :ok
+          {:error, reason} ->
+            # Log the error, but don't interrupt the user registration process
+            Logger.error("Failed to send Slack notification: #{inspect(reason)}")
+        end
+
         changeset = Accounts.change_user_registration(user)
+        Logger.info("User registration process completed for: #{user.email}")
         {:noreply, socket |> assign(trigger_submit: true) |> assign_form(changeset)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        Logger.warning("User registration failed: #{inspect(changeset.errors)}")
         {:noreply, socket |> assign(check_errors: true) |> assign_form(changeset)}
     end
   end
