@@ -12,7 +12,6 @@ url: [host: System.get_env("PHX_HOST") || "*.fileonchain.org", host: "*.fileonch
     layout: false
   ],
   cache_static_manifest: "priv/static/cache_manifest.json",
-  code_reloader: true,
   debug_errors: true,
   check_origin: [
     "https://fileonchain.org",
@@ -25,16 +24,6 @@ config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Fileonchain.Finc
 
 # Disable Swoosh Local Memory Storage
 config :swoosh, local: false
-
-# Watch static and templates for browser reloading.
-config :fileonchain, FileonchainWeb.Endpoint,
-  live_reload: [
-    patterns: [
-      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
-      ~r"lib/fileonchain_web/(controllers|live|components)/.*(ex|heex)$"
-    ]
-  ]
 
 # Do not print debug messages in production
 config :logger, level: :info
