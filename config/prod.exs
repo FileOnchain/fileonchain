@@ -10,7 +10,9 @@ config :fileonchain, FileonchainWeb.Endpoint,
     formats: [html: FileonchainWeb.ErrorHTML, json: FileonchainWeb.ErrorJSON],
     layout: false
   ],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  code_reloader: true,
+  debug_errors: true,
 
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Fileonchain.Finch

@@ -6,6 +6,8 @@ services:
     image: postgres:14
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - app_network
     ports:
       - "${DB_PORT}:${DB_PORT}"
     volumes:
@@ -25,6 +27,8 @@ services:
       HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: visitor
       HASURA_GRAPHQL_STRINGIFY_NUMERIC_TYPES: "true"
+    networks:
+      - app_network
     ports:
       - "8080:8080"
     command:
@@ -41,7 +45,13 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       PHX_HOST: localhost
+    networks:
+      - app_network
     ports:
       - "4000:4000"
     depends_on:
       - db
+
+networks:
+  app_network:
+    driver: bridge
