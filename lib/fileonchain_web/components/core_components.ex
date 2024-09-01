@@ -500,7 +500,7 @@ defmodule FileonchainWeb.CoreComponents do
               class={["relative p-4", @row_click && "hover:cursor-pointer"]}
             >
               <div class="block py-4 pr-6">
-                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-brand-700 sm:rounded-l-xl" />
+                <span class="absolute -inset-y-px right-0 -left-0 group-hover:bg-brand-700 sm:rounded-l-xl" />
                 <span class={["relative", i == 0 && "font-semibold text-secondary"]}>
                   <%= render_slot(col, @row_item.(row)) %>
                 </span>

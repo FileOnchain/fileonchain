@@ -1,9 +1,9 @@
 <div class="mx-auto max-w-2xl p-12 bg-brand-900 text-white rounded-lg shadow-lg">
-  <.header class="text-center text-white text-2xl">
+  <.header>
     Listing Files
     <:actions>
-      <.link patch={~p"/files/new"} class="font-semibold hover:underline text-secondary-light">
-        <.button class="bg-secondary hover:bg-secondary-dark text-white p-4 rounded">New File</.button>
+      <.link patch={~p"/files/new"}>
+        <.button>New File</.button>
       </.link>
     </:actions>
   </.header>
@@ -17,17 +17,16 @@
     <:col :let={{_id, file}} label="Preview">
       <%= raw(render_file_preview(file)) %>
     </:col>
-    <:col :let={{_id, file}} label="Size" class="p-4 border-b border-brand-700"><%= format_file_size(file.data) %></:col>
+    <:col :let={{_id, file}} label="Size"><%= format_file_size(file.data) %></:col>
     <:action :let={{_id, file}}>
-      <div class="sr-only">
-        <.link navigate={~p"/files/#{file}"} class="text-secondary-light hover:underline">Show</.link>
+      <div>
+        <.link navigate={~p"/files/#{file}"}>Show</.link>
       </div>
     </:action>
     <:action :let={{id, file}}>
       <.link
         phx-click={JS.push("hide", value: %{id: file.id}) |> hide("##{id}")}
         data-confirm="Are you sure?"
-        class="text-secondary hover:text-secondary-light"
       >
         Hide
       </.link>

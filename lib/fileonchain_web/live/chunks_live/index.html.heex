@@ -1,9 +1,9 @@
 <div class="mx-auto max-w-4xl p-12 bg-brand-900 text-white rounded-lg shadow-lg">
-  <.header class="text-center text-white text-2xl">
+  <.header>
     Listing Chunks
     <:actions>
-      <.link patch={~p"/files/new"} class="font-semibold hover:underline text-secondary-light">
-        <.button class="bg-secondary hover:bg-secondary-dark text-white p-4 rounded">New File</.button>
+      <.link patch={~p"/files/new"}>
+        <.button>New File</.button>
       </.link>
     </:actions>
   </.header>
@@ -12,27 +12,25 @@
     id="chunks"
     rows={@streams.chunks}
     row_click={fn {_id, chunk} -> JS.navigate(~p"/chunks/#{chunk}") end}
-    class="w-full mt-6 bg-brand-800 rounded-lg"
   >
-    <:col :let={{_id, chunk}} label="Hash" class="p-4 border-b border-brand-700 text-white">
+    <:col :let={{_id, chunk}} label="Hash">
       <%= FileonchainWeb.ChunkLive.Index.shorten_hash(chunk.hash) %>
     </:col>
-    <:col :let={{_id, chunk}} label="Data" class="p-4 border-b border-brand-700">
+    <:col :let={{_id, chunk}} label="Data">
       <%= raw(FileonchainWeb.ChunkLive.Index.render_chunk_preview(chunk)) %>
     </:col>
-    <:col :let={{_id, chunk}} label="Size" class="p-4 border-b border-brand-700 text-white">
+    <:col :let={{_id, chunk}} label="Size">
       <%= FileonchainWeb.ChunkLive.Index.format_chunk_size(chunk.data) %>
     </:col>
-    <:action :let={{_id, chunk}} class="p-4 border-b border-brand-700">
+    <:action :let={{_id, chunk}}>
       <div class="sr-only">
-        <.link navigate={~p"/chunks/#{chunk}"} class="text-secondary-light hover:underline">Show</.link>
+        <.link navigate={~p"/chunks/#{chunk}"}>Show</.link>
       </div>
     </:action>
-    <:action :let={{id, chunk}} class="p-4 border-b border-brand-700">
+    <:action :let={{id, chunk}}>
       <.link
         phx-click={JS.push("hide", value: %{id: chunk.id}) |> hide("##{id}")}
         data-confirm="Are you sure?"
-        class="text-secondary hover:text-secondary-light"
       >
         Hide
       </.link>
