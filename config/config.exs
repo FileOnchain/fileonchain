@@ -14,6 +14,7 @@ config :fileonchain,
 # Configures the endpoint
 config :fileonchain, FileonchainWeb.Endpoint,
   url: [host: System.get_env("PHX_HOST") || "localhost"],
+  check_origin: [System.get_env("PHX_HOST") || "localhost"]
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: FileonchainWeb.ErrorHTML, json: FileonchainWeb.ErrorJSON],
