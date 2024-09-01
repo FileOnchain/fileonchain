@@ -1,21 +1,23 @@
 # Fileonchain
 
+![Fileonchain Home Page](/priv/static/images/preview-home.png)
+
 Fileonchain is a secure file storage solution that allows anyone to upload small and large files to any substrate network, making them permanently available on-chain ⛓️.
 
-## Official Links
+## 🚀 Quick Links
 
-- Website: [https://fileonchain.org](https://fileonchain.org)
-- Twitter/X: [@fileonchain](https://twitter.com/fileonchain)
+- 🌐 Website: [https://fileonchain.org](https://fileonchain.org)
+- 🐦 Twitter: [@fileonchain](https://twitter.com/fileonchain)
+- 🖥️ Live Demo: [https://staging.fileonchain.org/](https://staging.fileonchain.org/)
 
-## Getting Started
+## 🛠️ Getting Started
 
 ### Using Docker Compose
 
-1. Ensure you have Docker and Docker Compose installed on your system.
-
+1. Ensure Docker and Docker Compose are installed on your system.
 2. Clone the repository and navigate to the project directory.
+3. Create a `.env` file in the root directory with the following:
 
-3. Create a `.env` file in the root directory with the following environment variables:
    ```
    DB_PASSWORD=your_db_password
    DB_PORT=5432
@@ -26,37 +28,64 @@ Fileonchain is a secure file storage solution that allows anyone to upload small
    PHX_HOST=localhost
    ```
 
-4. Run the following command to start all services:
+4. Start all services:
    ```
    docker compose up
    ```
 
-5. Once all containers are up and running, you can access:
-   - The Phoenix application at [`http://localhost:4000`](http://localhost:4000)
-   - The Hasura GraphQL engine at [`http://localhost:8080`](http://localhost:8080)
+5. Start Phoenix, in a new terminal:
+   ```
+   mix phx.server
+   ```
+
+5. Access the services:
+   - Phoenix application: [http://localhost:4000](http://localhost:4000)
+   - Hasura GraphQL engine: [http://localhost:8080](http://localhost:8080)
+
+### Normal Setup for Phoenix @Web
+
+1. Install dependencies:
+   ```
+   mix deps.get
+   ```
+
+2. Create and migrate your database:
+   ```
+   mix setup
+   mix ecto.migrate
+   ```
+
+3. Start Phoenix server:
+   ```
+   mix phx.server
+   ```
+
+4. Access the application at [http://localhost:4000](http://localhost:4000)
 
 ### Manual Setup (for development)
 
-If you prefer to run the services separately:
+1. Start Postgres and Hasura: `docker compose up db graphql-engine`
+2. Install dependencies: `mix setup`
+3. Start Phoenix endpoint: `mix phx.server` or `iex -S mix phx.server` (inside IEx)
 
-1. Run `docker compose up db graphql-engine` to start Postgres and Hasura.
-2. Run `mix setup` to install and setup dependencies.
-3. Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`.
+Visit [localhost:4000](http://localhost:4000) in your browser.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## 📚 Learn More
 
-## Live Demo
+- [Phoenix Framework](https://www.phoenixframework.org/)
+- [Phoenix Guides](https://hexdocs.pm/phoenix/overview.html)
+- [Phoenix Documentation](https://hexdocs.pm/phoenix)
+- [Elixir Forum](https://elixirforum.com/c/phoenix-forum)
+- [Phoenix GitHub Repository](https://github.com/phoenixframework/phoenix)
 
-You can try out the live demo of Fileonchain at [https://staging.fileonchain.org/](https://staging.fileonchain.org/).
+## 🚀 Deployment
 
-## Learn more
+Ready for production? Check out the [Phoenix deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## 🤝 Contributing
 
-## Deployment
+We welcome contributions! Please feel free to submit a Pull Request.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE.md).
