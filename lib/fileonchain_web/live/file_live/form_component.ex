@@ -16,7 +16,7 @@ defmodule FileonchainWeb.FileLive.FormComponent do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="overlay mx-auto max-w-md p-12 bg-brand-900 bg-opacity-50 text-white rounded-lg shadow-lg">
+    <div class="overlay mx-auto max-w-md p-4 sm:p-6 lg:p-12 bg-brand-900 bg-opacity-50 text-white rounded-lg shadow-lg">
       <.header class="text-center text-white text-2xl">
         <%= @title %>
         <:subtitle>Use this form to manage file records in your database.</:subtitle>
