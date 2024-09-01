@@ -84,8 +84,14 @@ COPY lib lib
 
 COPY assets assets
 
+# Install yarn
+RUN npm install -g yarn
+
+# Verify installation
+RUN yarn --version
 
 # compile assets
+RUN cd assets && yarn && yarn build
 RUN mix assets.deploy
 
 # Compile the release
