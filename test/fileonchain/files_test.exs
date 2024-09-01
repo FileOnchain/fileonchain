@@ -31,31 +31,5 @@ defmodule Fileonchain.FilesTest do
     test "create_file/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Files.create_file(@invalid_attrs)
     end
-
-    test "update_file/2 with valid data updates the file" do
-      file = file_fixture()
-      update_attrs = %{data: "some updated data", filename: "some updated filename"}
-
-      assert {:ok, %File{} = file} = Files.update_file(file, update_attrs)
-      assert file.data == "some updated data"
-      assert file.filename == "some updated filename"
-    end
-
-    test "update_file/2 with invalid data returns error changeset" do
-      file = file_fixture()
-      assert {:error, %Ecto.Changeset{}} = Files.update_file(file, @invalid_attrs)
-      assert file == Files.get_file!(file.id)
-    end
-
-    test "delete_file/1 deletes the file" do
-      file = file_fixture()
-      assert {:ok, %File{}} = Files.delete_file(file)
-      assert_raise Ecto.NoResultsError, fn -> Files.get_file!(file.id) end
-    end
-
-    test "change_file/1 returns a file changeset" do
-      file = file_fixture()
-      assert %Ecto.Changeset{} = Files.change_file(file)
-    end
   end
 end

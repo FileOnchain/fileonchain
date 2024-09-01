@@ -11,7 +11,8 @@ defmodule Fileonchain.ChunksFixtures do
     {:ok, chunk} =
       attrs
       |> Enum.into(%{
-        chunk: "some chunk",
+        hash: "some hash",
+        cid: "some cid",
         data: "some data"
       })
       |> Fileonchain.Chunks.create_chunk()
