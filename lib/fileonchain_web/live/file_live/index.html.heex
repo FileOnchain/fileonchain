@@ -12,10 +12,9 @@
     id="files"
     rows={@streams.files}
     row_click={fn {_id, file} -> JS.navigate(~p"/files/#{file}") end}
-    class="w-full mt-6 bg-brand-800 rounded-lg"
   >
-    <:col :let={{_id, file}} label="Filename" class="p-4 border-b border-brand-700"><%= file.filename %></:col>
-    <:col :let={{_id, file}} label="Preview" class="p-4 border-b border-brand-700">
+    <:col :let={{_id, file}} label="Filename"><%= file.filename %></:col>
+    <:col :let={{_id, file}} label="Preview">
       <%= raw(render_file_preview(file)) %>
     </:col>
     <:col :let={{_id, file}} label="Size" class="p-4 border-b border-brand-700"><%= format_file_size(file.data) %></:col>

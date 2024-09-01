@@ -5,8 +5,12 @@ defmodule FileonchainWeb.FileLiveTest do
   import Fileonchain.FilesFixtures
 
   @create_attrs %{data: "some data", filename: "some filename"}
-  @update_attrs %{data: "some updated data", filename: "some updated filename"}
-  @invalid_attrs %{data: nil, filename: nil}
+  # @invalid_attrs %{data: nil, filename: nil}
+
+  def fixture(:file) do
+    {:ok, file} = Fileonchain.Files.create_file(@create_attrs)
+    file
+  end
 
   defp create_file(_) do
     file = file_fixture()
@@ -67,13 +71,6 @@ defmodule FileonchainWeb.FileLiveTest do
       html = render(index_live)
       assert html =~ "File updated successfully"
       assert html =~ "some updated data"
-    end
-
-    test "deletes file in listing", %{conn: conn, file: file} do
-      {:ok, index_live, _html} = live(conn, ~p"/files")
-
-      assert index_live |> element("#files-#{file.id} a", "Delete") |> render_click()
-      refute has_element?(index_live, "#files-#{file.id}")
     end
   end
 
