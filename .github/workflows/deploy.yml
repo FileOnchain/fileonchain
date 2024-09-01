@@ -1,0 +1,93 @@
+name: Elixir CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Run Tests
+    services:
+      db:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-elixir@v1.2.0
+        with:
+          elixir-version: 1.14.2
+          otp-version: 24.1
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+      - name: Install Dependencies
+        run: mix deps.get
+      - name: Start Hasura GraphQL Engine
+        env:
+          HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+          HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+          HASURA_GRAPHQL_DEV_MODE: "true"
+          HASURA_GRAPHQL_ADMIN_SECRET: helloworld
+          HASURA_GRAPHQL_UNAUTHORIZED_ROLE: visitor
+          HASURA_GRAPHQL_STRINGIFY_NUMERIC_TYPES: "true"
+        run: |
+          docker run -d --name graphql-engine --network host \
+            -e HASURA_GRAPHQL_METADATA_DATABASE_URL=${{ env.HASURA_GRAPHQL_METADATA_DATABASE_URL }} \
+            -e HASURA_GRAPHQL_ENABLE_CONSOLE=${{ env.HASURA_GRAPHQL_ENABLE_CONSOLE }} \
+            -e HASURA_GRAPHQL_DEV_MODE=${{ env.HASURA_GRAPHQL_DEV_MODE }} \
+            -e HASURA_GRAPHQL_ADMIN_SECRET=${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} \
+            -e HASURA_GRAPHQL_UNAUTHORIZED_ROLE=${{ env.HASURA_GRAPHQL_UNAUTHORIZED_ROLE }} \
+            -e HASURA_GRAPHQL_STRINGIFY_NUMERIC_TYPES=${{ env.HASURA_GRAPHQL_STRINGIFY_NUMERIC_TYPES }} \
+            hasura/graphql-engine:v2.40.0
+      - name: Run Tests
+        run: mix test
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/my_phoenix_app:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to Digital Ocean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DIGITAL_OCEAN_HOST }}
+          username: ${{ secrets.DIGITAL_OCEAN_USERNAME }}
+          key: ${{ secrets.DIGITAL_OCEAN_SSH_KEY }}
+          script: |
+            docker pull ghcr.io/${{ github.repository_owner }}/my_phoenix_app:${{ github.sha }}
+            docker stop my_phoenix_app || true
+            docker rm my_phoenix_app || true
+            docker run -d --name my_phoenix_app -p 80:4000 ghcr.io/${{ github.repository_owner }}/my_phoenix_app:${{ github.sha }}
