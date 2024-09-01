@@ -43,13 +43,18 @@ RUN mkdir config
 # to ensure any relevant config change will trigger the dependencies
 # to be re-compiled.
 COPY config/config.exs config/${MIX_ENV}.exs config/
-RUN mix deps.compile
 
-COPY priv priv
+# Install rustup and set the toolchain
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
+    . $HOME/.cargo/env
 
-COPY lib lib
+# Add .cargo/bin to PATH
+ENV PATH="/root/.cargo/bin:${PATH}"
 
-COPY assets assets
+RUN rustup install stable
+RUN rustup default stable
+RUN rustup target add wasm32-unknown-unknown
+RUN rustup target add x86_64-unknown-linux-gnu
 
 # Install nvm
 ENV NVM_DIR /usr/local/nvm
@@ -69,12 +74,16 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN node --version
 RUN npm --version
 
-# Install rustup and set the toolchain
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-    source $HOME/.cargo/env && \
-    rustup install nightly-2022-07-24 && \
-    rustup default nightly-2022-07-24 && \
-    rustup target add wasm32-unknown-unknown
+# Compile deps
+# RUN mix deps.compile blake3 --force
+# RUN mix deps.compile
+
+COPY priv priv
+
+COPY lib lib
+
+COPY assets assets
+
 
 # compile assets
 RUN mix assets.deploy

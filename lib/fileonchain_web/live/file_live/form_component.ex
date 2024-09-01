@@ -101,7 +101,18 @@ defmodule FileonchainWeb.FileLive.FormComponent do
         chunks_results =
           Enum.map(chunks, fn chunk ->
             hash = Blake3.hash(chunk) |> Base.encode16(case: :lower)
-            Fileonchain.Chunks.create_chunk(%{hash: hash, cid: "dummy_cid", data: chunk})
+            case Fileonchain.Chunks.create_chunk(%{hash: hash, cid: "dummy_cid", data: chunk}) do
+              {:ok, _chunk} ->
+                # Send remark transaction
+                sender_seed = System.get_env("POLKADOT_SENDER_SEED") || "//Alice"
+                {tx_hash, exit_code} = System.cmd("node", ["dist/sendRemark.js", sender_seed, hash])
+                if exit_code == 0 do
+                  {:ok, String.trim(tx_hash)}
+                else
+                  {:error, "Failed to send remark: #{String.trim(tx_hash)}"}
+                end
+              error -> error
+            end
           end)
 
         if Enum.all?(chunks_results, fn {:ok, _} -> true; _ -> false end) do
@@ -109,12 +120,12 @@ defmodule FileonchainWeb.FileLive.FormComponent do
 
           {:noreply,
            socket
-           |> put_flash(:info, "File and Chunks created successfully")
+           |> put_flash(:info, "File and Chunks created successfully, remarks sent to Polkadot")
            |> push_patch(to: socket.assigns.patch)}
         else
           {:noreply,
            socket
-           |> put_flash(:error, "File created but failed to create some Chunks")
+           |> put_flash(:error, "File created but failed to create some Chunks or send remarks")
            |> push_patch(to: socket.assigns.patch)}
         end
 

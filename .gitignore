@@ -35,8 +35,14 @@ fileonchain-*.tar
 npm-debug.log
 /assets/node_modules/
 
-# Db hasura setup
-/db/node_modules/
+# Root node_modules
+node_modules
 
-# SSH keys
+# Ignore dist
+dist
+
+# Db hasura setup
+/db/node_modules
+
+# SSH Keys
 .ssh/
