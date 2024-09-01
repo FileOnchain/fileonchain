@@ -38,7 +38,7 @@ defmodule Fileonchain.MixProject do
       {:ecto_sql, "~> 3.12.0"},
       {:postgrex, ">= 0.19.1"},
       {:phoenix_html, "~> 4.1.1"},
-      {:phoenix_live_reload, "~> 1.5.3", only: :dev},
+      {:phoenix_live_reload, "~> 1.2"},
       # TODO bump on release to {:phoenix_live_view, "~> 1.0.0"},
       {:phoenix_live_view, "~> 1.0.0-rc.6", override: true},
       {:phoenix_live_view_dropzone, "~> 0.0.13"},
