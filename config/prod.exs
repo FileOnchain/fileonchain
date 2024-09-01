@@ -16,7 +16,7 @@ url: [host: System.get_env("PHX_HOST") || "*.fileonchain.org", host: "*.fileonch
   check_origin: [
     "https://fileonchain.org",
     "https://*.fileonchain.org",
-    "seashell-app-v9acv.ondigitalocean.app"
+    "https://seashell-app-v9acv.ondigitalocean.app"
   ]
 
 # Configures Swoosh API Client
