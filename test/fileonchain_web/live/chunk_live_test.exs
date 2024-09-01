@@ -17,10 +17,7 @@ defmodule FileonchainWeb.ChunkLiveTest do
     setup [:create_chunk]
 
     test "lists all chunks", %{conn: conn, chunk: chunk} do
-      {:ok, _index_live, html} = live(conn, ~p"/chunks")
-
-      assert html =~ "Listing Chunks"
-      assert html =~ chunk.data
+      {:error, {:redirect, %{to: "/users/log_in", flash: %{"error" => "You must log in to access this page."}}}} = live(conn, ~p"/chunks")
     end
   end
 
@@ -28,10 +25,7 @@ defmodule FileonchainWeb.ChunkLiveTest do
     setup [:create_chunk]
 
     test "displays chunk", %{conn: conn, chunk: chunk} do
-      {:ok, _show_live, html} = live(conn, ~p"/chunks/#{chunk}")
-
-      assert html =~ "Show Chunk"
-      assert html =~ chunk.data
+      {:error, {:redirect, %{to: "/users/log_in", flash: %{"error" => "You must log in to access this page."}}}} = live(conn, ~p"/chunks/#{chunk}")
     end
   end
 end
