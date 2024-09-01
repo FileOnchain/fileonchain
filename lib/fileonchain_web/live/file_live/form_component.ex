@@ -105,10 +105,14 @@ defmodule FileonchainWeb.FileLive.FormComponent do
               {:ok, _chunk} ->
                 # Send remark transaction
                 sender_seed = System.get_env("POLKADOT_SENDER_SEED") || "//Alice"
-                {tx_hash, exit_code} = System.cmd("node", ["dist/sendRemark.js", sender_seed, hash])
+                Logger.info("Sending remark transaction with sender seed: #{sender_seed} and hash: #{hash}")
+                {tx_hash, exit_code} = System.cmd("node", ["assets/dist/sendRemark.js", sender_seed, hash])
+                Logger.info("Remark transaction result: #{tx_hash}, exit code: #{exit_code}")
                 if exit_code == 0 do
+                  Logger.info("Remark transaction successful with tx hash: #{String.trim(tx_hash)}")
                   {:ok, String.trim(tx_hash)}
                 else
+                  Logger.error("Failed to send remark: #{String.trim(tx_hash)}")
                   {:error, "Failed to send remark: #{String.trim(tx_hash)}"}
                 end
               error -> error

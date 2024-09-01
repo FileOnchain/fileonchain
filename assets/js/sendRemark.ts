@@ -1,6 +1,9 @@
-import { connectToPolkadot, sendRemark } from './sendTransaction';
+import { sendRemark } from './sendTransaction';
 
 async function main(): Promise<void> {
+  console.log('send-remark call')
+  console.log('process.argv', process.argv)
+
   const [senderSeed, hash] = process.argv.slice(2);
   
   if (!senderSeed || !hash) {
@@ -9,8 +12,7 @@ async function main(): Promise<void> {
   }
 
   try {
-    const api = await connectToPolkadot();
-    const txHash = await sendRemark(api, senderSeed, hash);
+    const txHash = await sendRemark(senderSeed, hash);
     console.log(txHash);
     process.exit(0);
   } catch (error) {
