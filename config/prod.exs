@@ -12,6 +12,7 @@ url: [host: System.get_env("PHX_HOST") || "*.fileonchain.org", host: "*.fileonch
     layout: false
   ],
   cache_static_manifest: "priv/static/cache_manifest.json",
+  code_reloader: true,
   debug_errors: true,
   check_origin: [
     "https://fileonchain.org",
