@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/sendTransaction.ts"
+    "gen:wallet": "ts-node js/generate-wallet.ts"
   },
   "dependencies": {
     "@autonomys/auto-consensus": "^0.4.0",
