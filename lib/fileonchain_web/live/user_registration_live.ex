@@ -63,7 +63,7 @@ defmodule FileonchainWeb.UserRegistrationLive do
     case Accounts.register_user(user_params) do
       {:ok, user} ->
         Logger.info("User registered successfully: #{user.email}")
-        {:ok, _} =
+        # {:ok, _} =
           # Accounts.deliver_user_confirmation_instructions(
           #  user,
           #  &url(~p"/users/confirm/#{&1}")
