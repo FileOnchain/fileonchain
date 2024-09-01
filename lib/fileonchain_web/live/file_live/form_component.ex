@@ -104,7 +104,7 @@ defmodule FileonchainWeb.FileLive.FormComponent do
             case Fileonchain.Chunks.create_chunk(%{hash: hash, cid: "dummy_cid", data: chunk}) do
               {:ok, _chunk} ->
                 # Send remark transaction
-                sender_seed = System.get_env("POLKADOT_SENDER_SEED") || "//Alice"
+                sender_seed = System.get_env("SENDER_SEED") || "//Alice"
                 Logger.info("Sending remark transaction with sender seed: #{sender_seed} and hash: #{hash}")
                 {tx_hash, exit_code} = System.cmd("node", ["assets/dist/sendRemark.js", sender_seed, hash])
                 Logger.info("Remark transaction result: #{tx_hash}, exit code: #{exit_code}")
