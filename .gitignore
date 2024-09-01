@@ -43,3 +43,6 @@ dist
 
 # Db hasura setup
 /db/node_modules
+
+# SSH Keys
+.ssh/
