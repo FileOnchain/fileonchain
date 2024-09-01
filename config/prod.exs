@@ -6,6 +6,7 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :fileonchain, FileonchainWeb.Endpoint,
+url: [host: System.get_env("PHX_HOST"), "*.fileonchain.org"],
   render_errors: [
     formats: [html: FileonchainWeb.ErrorHTML, json: FileonchainWeb.ErrorJSON],
     layout: false
