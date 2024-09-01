@@ -64,10 +64,10 @@ defmodule FileonchainWeb.UserRegistrationLive do
       {:ok, user} ->
         Logger.info("User registered successfully: #{user.email}")
         {:ok, _} =
-          Accounts.deliver_user_confirmation_instructions(
-            user,
-            &url(~p"/users/confirm/#{&1}")
-          )
+          # Accounts.deliver_user_confirmation_instructions(
+          #  user,
+          #  &url(~p"/users/confirm/#{&1}")
+        #  )
 
         # Send Slack notification
         case Slack.send_message("New user registered: #{user.email}") do
