@@ -8,12 +8,17 @@ defmodule Fileonchain.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"Fileonchain", "contact@example.com"})
+      |> from({"Fileonchain", System.get_env("SENDER_EMAIL") || "contact@example.com"})
       |> subject(subject)
       |> text_body(body)
 
-    with {:ok, _metadata} <- Mailer.deliver(email) do
-      {:ok, email}
+    case Mailer.deliver(email) do
+      {:ok, _metadata} ->
+        IO.puts("Email sent successfully to #{recipient}")
+        {:ok, email}
+      {:error, reason} ->
+        IO.puts("Failed to send email to #{recipient}. Reason: #{inspect(reason)}")
+        {:error, reason}
     end
   end
 

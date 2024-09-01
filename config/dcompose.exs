@@ -6,18 +6,13 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :fileonchain, FileonchainWeb.Endpoint,
-url: [host: System.get_env("PHX_HOST") || "*.fileonchain.org", host: "*.fileonchain.org"],
+url: [host: System.get_env("PHX_HOST") || "localhost"],
   render_errors: [
     formats: [html: FileonchainWeb.ErrorHTML, json: FileonchainWeb.ErrorJSON],
     layout: false
   ],
   cache_static_manifest: "priv/static/cache_manifest.json",
-  debug_errors: true,
-  check_origin: [
-    "https://fileonchain.org",
-    "https://*.fileonchain.org",
-    "seashell-app-v9acv.ondigitalocean.app"
-  ]
+  debug_errors: true
 
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Fileonchain.Finch
@@ -27,6 +22,19 @@ config :swoosh, local: false
 
 # Do not print debug messages in production
 config :logger, level: :info
+
+# Configure Swoosh for email sending
+config :fileonchain, Fileonchain.Mailer,
+  adapter: Swoosh.Adapters.SMTP,
+  relay: System.get_env("SMTP_HOST") || "smtp",
+  port: String.to_integer(System.get_env("SMTP_PORT") || "1025"),
+  username: nil,
+  password: nil,
+  ssl: false,
+  tls: :never,
+  auth: :never,
+  retries: 2,
+  no_mx_lookups: false
 
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
